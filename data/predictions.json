@@ -1,0 +1,16 @@
+[
+  {
+    "matchId": 1,
+    "predictions": [
+      { "name": "Сергей", "home": 2, "away": 1 },
+      { "name": "Слава", "home": 1, "away": 1 }
+    ]
+  },
+  {
+    "matchId": 2,
+    "predictions": [
+      { "name": "Сергей", "home": 0, "away": 1 },
+      { "name": "Слава", "home": 2, "away": 0 }
+    ]
+  }
+]
