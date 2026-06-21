@@ -14,7 +14,6 @@
       --text:#eff4ff;
       --muted:#9eb0d1;
       --line:#243554;
-      --accent:#16a34a;
       --accent2:#0f766e;
       --sergey:#3b82f6;
       --slava:#ef4444;
@@ -152,7 +151,6 @@
     }
 
     .btn.secondary{background:#1e293b}
-    .btn.warn{background:#b45309}
 
     .layout{
       display:grid;
@@ -232,7 +230,6 @@
       border-radius:14px;
     }
 
-    .good{color:#86efac}
     .blue{color:#93c5fd}
     .red{color:#fca5a5}
 
@@ -269,7 +266,7 @@
   <section class="hero">
     <div class="person">
       <div class="avatar">
-        <img src="/assets/slava.jpg" alt="Вячеслав" width="86" height="86" decoding="async" fetchpriority="high" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=&quot;avatarFallback&quot;>В</div>';">
+        <img src="/assets/slava.jpg" alt="Вячеслав" width="86" height="86" decoding="async" fetchpriority="high" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=&quot;avatarFallback&quot;>В</div>'; ">
       </div>
       <div class="personText">
         <div class="sub">Игрок</div>
@@ -286,7 +283,7 @@
 
     <div class="person">
       <div class="avatar">
-        <img src="/assets/sergey.jpg" alt="Сергей" width="86" height="86" decoding="async" fetchpriority="high" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=&quot;avatarFallback&quot;>С</div>';">
+        <img src="/assets/sergey.jpg" alt="Сергей" width="86" height="86" decoding="async" fetchpriority="high" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=&quot;avatarFallback&quot;>С</div>'; ">
       </div>
       <div class="personText">
         <div class="sub">Игрок</div>
@@ -326,7 +323,9 @@
     <div class="card">
       <h2 class="sectionTitle">Начисление очков</h2>
       <div id="log" class="log"></div>
-      <p class="note" style="margin-top:12px">Сейчас версия подготовлена как рабочий каркас приложения: список команд уже зашит, фото добавлены, экспорт/импорт настроек работает. Автоподтягивание матчей рассчитано на подключение внешнего API; если внешний источник на телефоне ограничен, останется запасной режим с импортом JSON-результатов.</p>
+      <p class="note" style="margin-top:12px">
+        Матчи подтягиваются автоматически через Cloudflare Worker и football-data.org.
+      </p>
     </div>
   </section>
 
@@ -478,40 +477,43 @@ function calcPoints(match){
   let sl = 0;
   let se = 0;
 
-  if(match.status !== 'FINISHED' ||
-     match.homeScore == null || match.awayScore == null){
+  if (match.status !== 'FINISHED' || match.homeScore == null || match.awayScore == null) {
     return { sl, se, text: 'Матч не завершён' };
   }
 
   const group = stageType(match.stage) === 'group';
 
-  if(group){
-    if(match.homeScore > match.awayScore){
-      if(oh === 'Вячеслав') sl += 3;
-      if(oh === 'Сергей') se += 3;
-    } else if(match.homeScore < match.awayScore){
-      if(oa === 'Вячеслав') sl += 3;
-      if(oa === 'Сергей') se += 3;
+  if (group) {
+    if (match.homeScore > match.awayScore) {
+      if (oh === 'Вячеслав') sl += 3;
+      if (oh === 'Сергей') se += 3;
+    } else if (match.homeScore < match.awayScore) {
+      if (oa === 'Вячеслав') sl += 3;
+      if (oa === 'Сергей') se += 3;
     } else {
-      if(oh === oa){
-        if(oh === 'Вячеслав') sl += 2;
-        if(oh === 'Сергей') se += 2;
+      if (oh === oa) {
+        if (oh === 'Вячеслав') sl += 2;
+        if (oh === 'Сергей') se += 2;
       } else {
-        if(oh === 'Вячеслав') sl += 1;
-        if(oh === 'Сергей') se += 1;
-        if(oa === 'Вячеслав') sl += 1;
-        if(oa === 'Сергей') se += 1;
+        if (oh === 'Вячеслав') sl += 1;
+        if (oh === 'Сергей') se += 1;
+        if (oa === 'Вячеслав') sl += 1;
+        if (oa === 'Сергей') se += 1;
       }
     }
   } else {
-    const winner = match.winner;
-    if(winner === 'HOME'){
-      if(oh === 'Вячеслав') sl += 3;
-      if(oh === 'Сергей') se += 3;
+    const winner =
+      match.homeScore > match.awayScore ? 'HOME' :
+      match.homeScore < match.awayScore ? 'AWAY' :
+      null;
+
+    if (winner === 'HOME') {
+      if (oh === 'Вячеслав') sl += 3;
+      if (oh === 'Сергей') se += 3;
     }
-    if(winner === 'AWAY'){
-      if(oa === 'Вячеслав') sl += 3;
-      if(oa === 'Сергей') se += 3;
+    if (winner === 'AWAY') {
+      if (oa === 'Вячеслав') sl += 3;
+      if (oa === 'Сергей') se += 3;
     }
   }
 
@@ -524,16 +526,12 @@ function renderTeams(){
     <tr>
       <td>${i + 1}</td>
       <td>${t.team}</td>
-      <td><span class="pill ${t.owner === 'Сергей' ? 'sergey' : 'slava'}">
-        ${ownerNames[t.owner]}
-      </span></td>
+      <td><span class="pill ${t.owner === 'Сергей' ? 'sergey' : 'slava'}">${ownerNames[t.owner]}</span></td>
     </tr>
   `).join('');
 
-  els.slavaTeams.textContent =
-    state.teams.filter(t => t.owner === 'Вячеслав').length;
-  els.sergeyTeams.textContent =
-    state.teams.filter(t => t.owner === 'Сергей').length;
+  els.slavaTeams.textContent = state.teams.filter(t => t.owner === 'Вячеслав').length;
+  els.sergeyTeams.textContent = state.teams.filter(t => t.owner === 'Сергей').length;
 }
 
 function renderMatches(){
@@ -546,14 +544,13 @@ function renderMatches(){
     sl += p.sl;
     se += p.se;
 
-    if(m.status === 'FINISHED' && (p.sl || p.se)){
+    if (m.status === 'FINISHED' && (p.sl || p.se)) {
       logs.push(`
         <div class="event">
           <div><span class="pill stage">${prettyStage(m.stage)}</span></div>
           <div style="margin-top:6px;font-weight:700">${p.text}</div>
           <div class="muted" style="margin-top:4px">
-            Славик: <span class="red">+${p.sl}</span> ·
-            Сергей: <span class="blue">+${p.se}</span>
+            Славик: <span class="red">+${p.sl}</span> · Сергей: <span class="blue">+${p.se}</span>
           </div>
         </div>
       `);
@@ -587,11 +584,11 @@ async function loadTeams(){
     saved = null;
   }
 
-  if(saved){
+  if (saved) {
     state.teams = JSON.parse(saved);
   } else {
     const resp = await fetch('/teams.json');
-    if(!resp.ok) throw new Error('teams.json not found');
+    if (!resp.ok) throw new Error('teams.json not found');
     state.teams = await resp.json();
   }
 
@@ -602,30 +599,11 @@ async function loadTeams(){
   renderTeams();
 }
 
-async function demoMatches(){
-  try{
-    const resp = await fetch('/matches.json');
-    if(!resp.ok) throw new Error('matches');
-    state.matches = await resp.json();
-    state.lastUpdate = new Date().toLocaleString('ru-RU');
-    els.lastUpdate.textContent =
-      'Последнее обновление: ' + state.lastUpdate + ' · local json';
-    renderMatches();
-  } catch(e){
-    state.matches = [];
-    state.lastUpdate = new Date().toLocaleString('ru-RU');
-    els.lastUpdate.textContent =
-      'Последнее обновление: ' + state.lastUpdate +
-      ' · matches.json не найден';
-    renderMatches();
-  }
-}
-
 async function fetchMatches(){
-  try{
+  try {
     const resp = await fetch('/api/scoreboard');
 
-    if(!resp.ok){
+    if (!resp.ok) {
       const text = await resp.text();
       throw new Error('API error: ' + resp.status + ' ' + text);
     }
@@ -639,13 +617,7 @@ async function fetchMatches(){
       awayTeam: mapTeamName(m.awayTeam || ''),
       homeScore: Number.isFinite(m.homeScore) ? m.homeScore : null,
       awayScore: Number.isFinite(m.awayScore) ? m.awayScore : null,
-      status: m.status || 'SCHEDULED',
-      winner:
-        m.homeScore != null && m.awayScore != null
-          ? (m.homeScore > m.awayScore ? 'HOME'
-             : m.homeScore < m.awayScore ? 'AWAY'
-             : null)
-          : null
+      status: m.status || 'SCHEDULED'
     })).filter(m => ownerOf(m.homeTeam) || ownerOf(m.awayTeam));
 
     state.lastUpdate = data.updatedAt
@@ -656,11 +628,11 @@ async function fetchMatches(){
       'Последнее обновление: ' + state.lastUpdate + ' · Cloudflare API';
 
     renderMatches();
-  } catch(e){
+  } catch (e) {
     console.error(e);
-    state.lastUpdate = new Date().toLocaleString('ru-RU');
     els.lastUpdate.textContent = 'Ошибка API: ' + e.message;
-    demoMatches();
+    state.matches = [];
+    renderMatches();
   }
 }
 
@@ -680,7 +652,7 @@ function importSettings(file){
   const reader = new FileReader();
   reader.onload = () => {
     const data = JSON.parse(reader.result);
-    if(data.teams){
+    if (data.teams) {
       state.teams = data.teams;
       try {
         localStorage.setItem('svs_teams', JSON.stringify(state.teams));
@@ -692,14 +664,11 @@ function importSettings(file){
   reader.readAsText(file);
 }
 
-document.getElementById('refreshBtn')
-  .addEventListener('click', fetchMatches);
-document.getElementById('exportBtn')
-  .addEventListener('click', exportSettings);
-document.getElementById('importFile')
-  .addEventListener('change', e => {
-    if(e.target.files[0]) importSettings(e.target.files[0]);
-  });
+document.getElementById('refreshBtn').addEventListener('click', fetchMatches);
+document.getElementById('exportBtn').addEventListener('click', exportSettings);
+document.getElementById('importFile').addEventListener('change', e => {
+  if (e.target.files[0]) importSettings(e.target.files[0]);
+});
 
 loadTeams().then(fetchMatches);
 setInterval(fetchMatches, 60 * 60 * 1000);
