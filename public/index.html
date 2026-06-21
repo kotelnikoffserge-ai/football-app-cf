@@ -601,7 +601,9 @@ async function loadTeams(){
 
 async function fetchMatches(){
   try {
-    const resp = await fetch('/api/scoreboard');
+    const resp = await fetch('/api/scoreboard?t=' + Date.now(), {
+      cache: 'no-store'
+    });
 
     if (!resp.ok) {
       const text = await resp.text();
@@ -629,8 +631,9 @@ async function fetchMatches(){
 
     renderMatches();
   } catch (e) {
-    console.error(e);
-    els.lastUpdate.textContent = 'Ошибка API: ' + e.message;
+    console.error('fetchMatches failed:', e);
+    els.lastUpdate.textContent =
+      'Ошибка API: сеть или соединение недоступны';
     state.matches = [];
     renderMatches();
   }
