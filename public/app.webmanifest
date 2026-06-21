@@ -1,0 +1,9 @@
+{
+  "name": "Славик vs Сергей",
+  "short_name": "В vs С",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b1220",
+  "theme_color": "#0f766e",
+  "icons": []
+}

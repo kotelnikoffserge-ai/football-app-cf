@@ -3,9 +3,8 @@
   "main": "src/index.js",
   "compatibility_date": "2026-06-20",
   "workers_dev": true,
-
   "assets": {
-    "directory": ".",
+    "directory": "public",
     "binding": "ASSETS",
     "run_worker_first": ["/api/*"]
   }

@@ -1,0 +1,708 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Славик vs Сергей</title>
+  <meta name="theme-color" content="#0f766e">
+  <link rel="manifest" href="/app.webmanifest">
+  <style>
+    :root{
+      --bg:#08111f;
+      --panel:#0f1b31;
+      --panel2:#13213b;
+      --text:#eff4ff;
+      --muted:#9eb0d1;
+      --line:#243554;
+      --accent:#16a34a;
+      --accent2:#0f766e;
+      --sergey:#3b82f6;
+      --slava:#ef4444;
+      --draw:#f59e0b;
+      --card:#101a2d;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family:Inter,Segoe UI,Arial,sans-serif;
+      background:radial-gradient(circle at top,#163154 0,#08111f 45%,#050b14 100%);
+      color:var(--text);
+    }
+
+    .wrap{
+      max-width:1320px;
+      margin:0 auto;
+      padding:16px;
+    }
+
+    .hero{
+      display:grid;
+      grid-template-columns:minmax(280px,1fr) auto minmax(280px,1fr);
+      gap:14px;
+      align-items:center;
+      background:linear-gradient(135deg,rgba(22,163,74,.12),rgba(59,130,246,.12));
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:18px;
+      box-shadow:0 14px 40px rgba(0,0,0,.25);
+    }
+
+    .person{
+      display:flex;
+      gap:14px;
+      align-items:center;
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      padding:12px;
+      border-radius:20px;
+      min-width:0;
+    }
+
+    .avatar{
+      width:86px;
+      height:86px;
+      border-radius:18px;
+      overflow:hidden;
+      border:2px solid rgba(255,255,255,.08);
+      background:linear-gradient(135deg,#10233f,#17345e);
+      flex:0 0 86px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .avatar img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    .avatarFallback{
+      font-size:26px;
+      font-weight:900;
+      color:#dbeafe;
+    }
+
+    .personText{min-width:0}
+
+    .name{
+      font-size:26px;
+      font-weight:800;
+      line-height:1.05;
+      word-break:break-word;
+    }
+
+    .sub{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.35;
+    }
+
+    .scoreBig{text-align:center}
+
+    .scoreBig .title{
+      font-size:34px;
+      font-weight:900;
+      line-height:1.05;
+    }
+
+    .scoreBig .small{color:var(--muted)}
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:14px;
+      margin-top:14px;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:16px;
+      min-width:0;
+    }
+
+    .kpi{
+      font-size:32px;
+      font-weight:900;
+      margin-top:8px;
+    }
+
+    .muted{color:var(--muted)}
+
+    .toolbar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin:16px 0;
+    }
+
+    .btn{
+      background:var(--accent2);
+      border:none;
+      color:#fff;
+      padding:10px 14px;
+      border-radius:12px;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    .btn.secondary{background:#1e293b}
+    .btn.warn{background:#b45309}
+
+    .layout{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:14px;
+    }
+
+    .sectionTitle{
+      font-size:20px;
+      font-weight:800;
+      margin:0 0 12px;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+    }
+
+    .tableWrap{
+      overflow:auto;
+      border-radius:16px;
+      border:1px solid var(--line);
+    }
+
+    th,td{
+      padding:10px 12px;
+      border-bottom:1px solid rgba(255,255,255,.06);
+      text-align:left;
+      font-size:14px;
+      white-space:nowrap;
+    }
+
+    th{
+      position:sticky;
+      top:0;
+      background:#14223d;
+      z-index:2;
+    }
+
+    tr:hover td{
+      background:rgba(255,255,255,.025);
+    }
+
+    .pill{
+      display:inline-block;
+      padding:5px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:800;
+    }
+
+    .pill.sergey{
+      background:rgba(59,130,246,.16);
+      color:#93c5fd;
+    }
+
+    .pill.slava{
+      background:rgba(239,68,68,.16);
+      color:#fca5a5;
+    }
+
+    .pill.stage{
+      background:rgba(245,158,11,.14);
+      color:#fcd34d;
+    }
+
+    .log{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .event{
+      border:1px solid var(--line);
+      background:var(--panel);
+      padding:12px;
+      border-radius:14px;
+    }
+
+    .good{color:#86efac}
+    .blue{color:#93c5fd}
+    .red{color:#fca5a5}
+
+    .note{
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.45;
+    }
+
+    @media (max-width:1180px){
+      .hero{grid-template-columns:1fr}
+      .scoreBig{order:-1}
+      .layout{grid-template-columns:1fr}
+      .grid{grid-template-columns:repeat(2,1fr)}
+    }
+
+    @media (max-width:720px){
+      .wrap{padding:10px}
+      .hero{padding:12px;border-radius:18px}
+      .person{padding:10px;border-radius:16px}
+      .avatar{width:64px;height:64px;flex-basis:64px;border-radius:14px}
+      .name{font-size:22px}
+      .scoreBig .title{font-size:28px}
+      .grid{grid-template-columns:1fr}
+      .card{padding:12px;border-radius:16px}
+      th,td{font-size:13px;padding:8px 10px}
+      .toolbar{gap:8px}
+      .btn{padding:9px 12px;font-size:14px}
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="person">
+      <div class="avatar">
+        <img src="/assets/slava.jpg" alt="Вячеслав" width="86" height="86" decoding="async" fetchpriority="high" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=&quot;avatarFallback&quot;>В</div>';">
+      </div>
+      <div class="personText">
+        <div class="sub">Игрок</div>
+        <div class="name">Славик</div>
+        <div class="sub">Команды и очки считаются автоматически</div>
+      </div>
+    </div>
+
+    <div class="scoreBig">
+      <div class="small">драфт чемпионата мира</div>
+      <div class="title">Славик vs Сергей</div>
+      <div id="lastUpdate" class="small">Ожидание обновления...</div>
+    </div>
+
+    <div class="person">
+      <div class="avatar">
+        <img src="/assets/sergey.jpg" alt="Сергей" width="86" height="86" decoding="async" fetchpriority="high" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=&quot;avatarFallback&quot;>С</div>';">
+      </div>
+      <div class="personText">
+        <div class="sub">Игрок</div>
+        <div class="name">Сергей</div>
+        <div class="sub">Группы: ничья считается, плей-офф: только победитель</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="toolbar">
+    <button class="btn" id="refreshBtn">Обновить результаты</button>
+    <button class="btn secondary" id="exportBtn">Экспорт настроек</button>
+    <label class="btn secondary" for="importFile" style="cursor:pointer">Импорт настроек</label>
+    <input id="importFile" type="file" accept="application/json" hidden>
+  </div>
+
+  <section class="grid">
+    <div class="card"><div class="muted">Очки Славика</div><div class="kpi" id="slavaPoints">0</div></div>
+    <div class="card"><div class="muted">Очки Сергея</div><div class="kpi" id="sergeyPoints">0</div></div>
+    <div class="card"><div class="muted">Команд у Славика</div><div class="kpi" id="slavaTeams">0</div></div>
+    <div class="card"><div class="muted">Команд у Сергея</div><div class="kpi" id="sergeyTeams">0</div></div>
+  </section>
+
+  <section class="layout" style="margin-top:14px;">
+    <div class="card">
+      <h2 class="sectionTitle">Команды и владельцы</h2>
+      <div class="tableWrap">
+        <table id="teamsTable">
+          <thead>
+            <tr><th>#</th><th>Команда</th><th>Владелец</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 class="sectionTitle">Начисление очков</h2>
+      <div id="log" class="log"></div>
+      <p class="note" style="margin-top:12px">Сейчас версия подготовлена как рабочий каркас приложения: список команд уже зашит, фото добавлены, экспорт/импорт настроек работает. Автоподтягивание матчей рассчитано на подключение внешнего API; если внешний источник на телефоне ограничен, останется запасной режим с импортом JSON-результатов.</p>
+    </div>
+  </section>
+
+  <section class="card" style="margin-top:14px;">
+    <h2 class="sectionTitle">Календарь и результаты</h2>
+    <div class="tableWrap">
+      <table id="matchesTable">
+        <thead>
+          <tr><th>Стадия</th><th>Матч</th><th>Счёт</th><th>Статус</th><th>Очки Славик</th><th>Очки Сергей</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<script>
+const state = { teams: [], matches: [], lastUpdate: null };
+const ownerNames = { "Вячеслав": "Славик", "Сергей": "Сергей" };
+
+const els = {
+  slavaPoints: document.getElementById('slavaPoints'),
+  sergeyPoints: document.getElementById('sergeyPoints'),
+  slavaTeams: document.getElementById('slavaTeams'),
+  sergeyTeams: document.getElementById('sergeyTeams'),
+  teamsTable: document.querySelector('#teamsTable tbody'),
+  matchesTable: document.querySelector('#matchesTable tbody'),
+  log: document.getElementById('log'),
+  lastUpdate: document.getElementById('lastUpdate')
+};
+
+const teamNameMap = {
+  "Mexico": "Мексика",
+  "South Africa": "ЮАР",
+  "Czech Republic": "Чехия",
+  "Czechia": "Чехия",
+  "Korea Republic": "Южная Корея",
+  "South Korea": "Южная Корея",
+  "United States": "США",
+  "USA": "США",
+  "England": "Англия",
+  "Germany": "Германия",
+  "Netherlands": "Нидерланды",
+  "Belgium": "Бельгия",
+  "Croatia": "Хорватия",
+  "Switzerland": "Швейцария",
+  "Senegal": "Сенегал",
+  "Ecuador": "Эквадор",
+  "Japan": "Япония",
+  "Norway": "Норвегия",
+  "Austria": "Австрия",
+  "Turkey": "Турция",
+  "Côte d'Ivoire": "Кот‑д’Ивуар",
+  "Ivory Coast": "Кот‑д’Ивуар",
+  "Canada": "Канада",
+  "Sweden": "Швеция",
+  "Australia": "Австралия",
+  "Algeria": "Алжир",
+  "Paraguay": "Парагвай",
+  "Iran": "Иран",
+  "Tunisia": "Тунис",
+  "DR Congo": "ДР Конго",
+  "Congo DR": "ДР Конго",
+  "Scotland": "Шотландия",
+  "Ghana": "Гана",
+  "Uzbekistan": "Узбекистан",
+  "Qatar": "Катар",
+  "Bosnia and Herzegovina": "Босния и Герцеговина",
+  "Bosnia-Herzegovina": "Босния и Герцеговина",
+  "Bosnia & Herzegovina": "Босния и Герцеговина",
+  "Panama": "Панама",
+  "Iraq": "Ирак",
+  "Jordan": "Иордания",
+  "Saudi Arabia": "Саудовская Аравия",
+  "New Zealand": "Новая Зеландия",
+  "Cape Verde Islands": "Кабо‑Верде",
+  "Cape Verde": "Кабо‑Верде",
+  "Haiti": "Гаити",
+  "Curaçao": "Кюрасао",
+  "Curacao": "Кюрасао",
+  "Spain": "Испания",
+  "France": "Франция",
+  "Argentina": "Аргентина",
+  "Brazil": "Бразилия",
+  "Portugal": "Португалия",
+  "Morocco": "Марокко",
+  "Colombia": "Колумбия",
+  "Uruguay": "Уругвай",
+  "Egypt": "Египет"
+};
+
+function mapTeamName(name){
+  return teamNameMap[name] || name;
+}
+
+function prettyStatus(status){
+  const map = {
+    SCHEDULED: 'Запланирован',
+    TIMED: 'Назначен',
+    IN_PLAY: 'Идёт',
+    PAUSED: 'Перерыв',
+    FINISHED: 'Завершён',
+    POSTPONED: 'Перенесён',
+    SUSPENDED: 'Остановлен',
+    CANCELLED: 'Отменён',
+    AWARDED: 'Тех. результат'
+  };
+  return map[status] || status;
+}
+
+function normalize(s){
+  return (s || '')
+    .toString()
+    .trim()
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[’'`´]/g, "'")
+    .replace(/[‑–—−]/g, '-')
+    .replace(/\s+/g, ' ');
+}
+
+function ownerOf(team){
+  const x = state.teams.find(t => normalize(t.team) === normalize(team));
+  return x ? x.owner : null;
+}
+
+function stageType(stage){
+  const s = normalize(stage);
+  return s.includes('group') || s.includes('груп') ? 'group' : 'knockout';
+}
+
+function prettyStage(stage){
+  const map = {
+    GROUP_STAGE: 'Групповой этап',
+    LAST_32: '1/16 финала',
+    LAST_16: '1/8 финала',
+    QUARTER_FINALS: '1/4 финала',
+    SEMI_FINALS: '1/2 финала',
+    THIRD_PLACE: 'Матч за 3 место',
+    FINAL: 'Финал'
+  };
+  return map[stage] || stage;
+}
+
+function calcPoints(match){
+  const oh = ownerOf(match.homeTeam);
+  const oa = ownerOf(match.awayTeam);
+  let sl = 0;
+  let se = 0;
+
+  if(match.status !== 'FINISHED' ||
+     match.homeScore == null || match.awayScore == null){
+    return { sl, se, text: 'Матч не завершён' };
+  }
+
+  const group = stageType(match.stage) === 'group';
+
+  if(group){
+    if(match.homeScore > match.awayScore){
+      if(oh === 'Вячеслав') sl += 3;
+      if(oh === 'Сергей') se += 3;
+    } else if(match.homeScore < match.awayScore){
+      if(oa === 'Вячеслав') sl += 3;
+      if(oa === 'Сергей') se += 3;
+    } else {
+      if(oh === oa){
+        if(oh === 'Вячеслав') sl += 2;
+        if(oh === 'Сергей') se += 2;
+      } else {
+        if(oh === 'Вячеслав') sl += 1;
+        if(oh === 'Сергей') se += 1;
+        if(oa === 'Вячеслав') sl += 1;
+        if(oa === 'Сергей') se += 1;
+      }
+    }
+  } else {
+    const winner = match.winner;
+    if(winner === 'HOME'){
+      if(oh === 'Вячеслав') sl += 3;
+      if(oh === 'Сергей') se += 3;
+    }
+    if(winner === 'AWAY'){
+      if(oa === 'Вячеслав') sl += 3;
+      if(oa === 'Сергей') se += 3;
+    }
+  }
+
+  const text = `${match.homeTeam} ${match.homeScore}:${match.awayScore} ${match.awayTeam}`;
+  return { sl, se, text };
+}
+
+function renderTeams(){
+  els.teamsTable.innerHTML = state.teams.map((t, i) => `
+    <tr>
+      <td>${i + 1}</td>
+      <td>${t.team}</td>
+      <td><span class="pill ${t.owner === 'Сергей' ? 'sergey' : 'slava'}">
+        ${ownerNames[t.owner]}
+      </span></td>
+    </tr>
+  `).join('');
+
+  els.slavaTeams.textContent =
+    state.teams.filter(t => t.owner === 'Вячеслав').length;
+  els.sergeyTeams.textContent =
+    state.teams.filter(t => t.owner === 'Сергей').length;
+}
+
+function renderMatches(){
+  let sl = 0;
+  let se = 0;
+  const logs = [];
+
+  els.matchesTable.innerHTML = state.matches.map(m => {
+    const p = calcPoints(m);
+    sl += p.sl;
+    se += p.se;
+
+    if(m.status === 'FINISHED' && (p.sl || p.se)){
+      logs.push(`
+        <div class="event">
+          <div><span class="pill stage">${prettyStage(m.stage)}</span></div>
+          <div style="margin-top:6px;font-weight:700">${p.text}</div>
+          <div class="muted" style="margin-top:4px">
+            Славик: <span class="red">+${p.sl}</span> ·
+            Сергей: <span class="blue">+${p.se}</span>
+          </div>
+        </div>
+      `);
+    }
+
+    return `
+      <tr>
+        <td>${prettyStage(m.stage)}</td>
+        <td>${m.homeTeam} — ${m.awayTeam}</td>
+        <td>${m.homeScore ?? '-'}:${m.awayScore ?? '-'}</td>
+        <td>${prettyStatus(m.status)}</td>
+        <td>${p.sl}</td>
+        <td>${p.se}</td>
+      </tr>
+    `;
+  }).join('');
+
+  els.slavaPoints.textContent = sl;
+  els.sergeyPoints.textContent = se;
+  els.log.innerHTML = logs.length
+    ? logs.join('')
+    : '<div class="event">Пока нет завершённых матчей для начисления.</div>';
+}
+
+async function loadTeams(){
+  let saved = null;
+
+  try {
+    saved = localStorage.getItem('svs_teams');
+  } catch (e) {
+    saved = null;
+  }
+
+  if(saved){
+    state.teams = JSON.parse(saved);
+  } else {
+    const resp = await fetch('/teams.json');
+    if(!resp.ok) throw new Error('teams.json not found');
+    state.teams = await resp.json();
+  }
+
+  try {
+    localStorage.setItem('svs_teams', JSON.stringify(state.teams));
+  } catch (e) {}
+
+  renderTeams();
+}
+
+async function demoMatches(){
+  try{
+    const resp = await fetch('/matches.json');
+    if(!resp.ok) throw new Error('matches');
+    state.matches = await resp.json();
+    state.lastUpdate = new Date().toLocaleString('ru-RU');
+    els.lastUpdate.textContent =
+      'Последнее обновление: ' + state.lastUpdate + ' · local json';
+    renderMatches();
+  } catch(e){
+    state.matches = [];
+    state.lastUpdate = new Date().toLocaleString('ru-RU');
+    els.lastUpdate.textContent =
+      'Последнее обновление: ' + state.lastUpdate +
+      ' · matches.json не найден';
+    renderMatches();
+  }
+}
+
+async function fetchMatches(){
+  try{
+    const resp = await fetch('/api/scoreboard');
+
+    if(!resp.ok){
+      const text = await resp.text();
+      throw new Error('API error: ' + resp.status + ' ' + text);
+    }
+
+    const data = await resp.json();
+
+    state.matches = (data.matches || []).map(m => ({
+      id: m.id,
+      stage: m.stage || 'GROUP_STAGE',
+      homeTeam: mapTeamName(m.homeTeam || ''),
+      awayTeam: mapTeamName(m.awayTeam || ''),
+      homeScore: Number.isFinite(m.homeScore) ? m.homeScore : null,
+      awayScore: Number.isFinite(m.awayScore) ? m.awayScore : null,
+      status: m.status || 'SCHEDULED',
+      winner:
+        m.homeScore != null && m.awayScore != null
+          ? (m.homeScore > m.awayScore ? 'HOME'
+             : m.homeScore < m.awayScore ? 'AWAY'
+             : null)
+          : null
+    })).filter(m => ownerOf(m.homeTeam) || ownerOf(m.awayTeam));
+
+    state.lastUpdate = data.updatedAt
+      ? new Date(data.updatedAt).toLocaleString('ru-RU')
+      : new Date().toLocaleString('ru-RU');
+
+    els.lastUpdate.textContent =
+      'Последнее обновление: ' + state.lastUpdate + ' · Cloudflare API';
+
+    renderMatches();
+  } catch(e){
+    console.error(e);
+    state.lastUpdate = new Date().toLocaleString('ru-RU');
+    els.lastUpdate.textContent = 'Ошибка API: ' + e.message;
+    demoMatches();
+  }
+}
+
+function exportSettings(){
+  const blob = new Blob([JSON.stringify({
+    teams: state.teams,
+    exportedAt: new Date().toISOString()
+  }, null, 2)], { type:'application/json' });
+
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'slavik-vs-sergey-settings.json';
+  a.click();
+}
+
+function importSettings(file){
+  const reader = new FileReader();
+  reader.onload = () => {
+    const data = JSON.parse(reader.result);
+    if(data.teams){
+      state.teams = data.teams;
+      try {
+        localStorage.setItem('svs_teams', JSON.stringify(state.teams));
+      } catch (e) {}
+      renderTeams();
+      renderMatches();
+    }
+  };
+  reader.readAsText(file);
+}
+
+document.getElementById('refreshBtn')
+  .addEventListener('click', fetchMatches);
+document.getElementById('exportBtn')
+  .addEventListener('click', exportSettings);
+document.getElementById('importFile')
+  .addEventListener('change', e => {
+    if(e.target.files[0]) importSettings(e.target.files[0]);
+  });
+
+loadTeams().then(fetchMatches);
+setInterval(fetchMatches, 60 * 60 * 1000);
+</script>
+</body>
+</html>
