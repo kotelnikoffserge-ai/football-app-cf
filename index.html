@@ -451,7 +451,7 @@ function normalize(s){
 
 function ownerOf(team){
   const x = state.teams.find(t => normalize(t.team) === normalize(team));
-  return x ? t.owner : null;
+  return x ? x.owner : null;
 }
 
 function stageType(stage){

@@ -86,6 +86,9 @@ export default {
         const matchesForClient = finishedMatches.map(m => ({
           id: m.id,
           utcDate: m.utcDate,
+          stage: m.stage,
+          group: m.group,
+          matchday: m.matchday,
           homeTeam: m.homeTeam?.name,
           awayTeam: m.awayTeam?.name,
           homeScore: m.score?.fullTime?.home,
