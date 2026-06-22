@@ -10,254 +10,74 @@
     :root{
       --bg:#08111f;
       --panel:#0f1b31;
-      --panel2:#13213b;
       --text:#eff4ff;
       --muted:#9eb0d1;
       --line:#243554;
-      --accent2:#0f766e;
-      --sergey:#3b82f6;
-      --slava:#ef4444;
-      --draw:#f59e0b;
       --card:#101a2d;
     }
-
     *{box-sizing:border-box}
-
     body{
       margin:0;
       font-family:Inter,Segoe UI,Arial,sans-serif;
       background:radial-gradient(circle at top,#163154 0,#08111f 45%,#050b14 100%);
       color:var(--text);
     }
-
-    .wrap{
-      max-width:1320px;
-      margin:0 auto;
-      padding:16px;
-    }
-
+    .wrap{max-width:1320px;margin:0 auto;padding:16px}
     .hero{
-      display:grid;
-      grid-template-columns:minmax(280px,1fr) auto minmax(280px,1fr);
-      gap:14px;
-      align-items:center;
-      background:linear-gradient(135deg,rgba(22,163,74,.12),rgba(59,130,246,.12));
-      border:1px solid var(--line);
-      border-radius:24px;
-      padding:18px;
-      box-shadow:0 14px 40px rgba(0,0,0,.25);
+      display:grid;grid-template-columns:minmax(280px,1fr) auto minmax(280px,1fr);
+      gap:14px;align-items:center;background:linear-gradient(135deg,rgba(22,163,74,.12),rgba(59,130,246,.12));
+      border:1px solid var(--line);border-radius:24px;padding:18px;
     }
-
     .person{
-      display:flex;
-      gap:14px;
-      align-items:center;
-      background:rgba(255,255,255,.03);
-      border:1px solid var(--line);
-      padding:12px;
-      border-radius:20px;
-      min-width:0;
+      display:flex;gap:14px;align-items:center;background:rgba(255,255,255,.03);
+      border:1px solid var(--line);padding:12px;border-radius:20px;min-width:0;
     }
-
     .avatar{
-      width:86px;
-      height:86px;
-      border-radius:18px;
-      overflow:hidden;
-      border:2px solid rgba(255,255,255,.08);
-      background:linear-gradient(135deg,#10233f,#17345e);
-      flex:0 0 86px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      width:86px;height:86px;border-radius:18px;overflow:hidden;border:2px solid rgba(255,255,255,.08);
+      background:linear-gradient(135deg,#10233f,#17345e);flex:0 0 86px;display:flex;align-items:center;justify-content:center;
     }
-
-    .avatar img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-    }
-
-    .avatarFallback{
-      font-size:26px;
-      font-weight:900;
-      color:#dbeafe;
-    }
-
-    .personText{min-width:0}
-
-    .name{
-      font-size:26px;
-      font-weight:800;
-      line-height:1.05;
-      word-break:break-word;
-    }
-
-    .sub{
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.35;
-    }
-
+    .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+    .avatarFallback{font-size:26px;font-weight:900;color:#dbeafe}
+    .name{font-size:26px;font-weight:800;line-height:1.05}
+    .sub{color:var(--muted);font-size:13px;line-height:1.35}
     .scoreBig{text-align:center}
-
-    .scoreBig .title{
-      font-size:34px;
-      font-weight:900;
-      line-height:1.05;
-    }
-
+    .scoreBig .title{font-size:34px;font-weight:900;line-height:1.05}
     .scoreBig .small{color:var(--muted)}
-
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:14px;
-      margin-top:14px;
-    }
-
-    .card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:22px;
-      padding:16px;
-      min-width:0;
-    }
-
-    .kpi{
-      font-size:32px;
-      font-weight:900;
-      margin-top:8px;
-    }
-
+    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:14px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:16px;min-width:0}
+    .kpi{font-size:32px;font-weight:900;margin-top:8px}
     .muted{color:var(--muted)}
-
-    .toolbar{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin:16px 0;
-    }
-
-    .btn{
-      background:var(--accent2);
-      border:none;
-      color:#fff;
-      padding:10px 14px;
-      border-radius:12px;
-      font-weight:700;
-      cursor:pointer;
-    }
-
-    .btn.secondary{background:#1e293b}
-
-    .layout{
-      display:grid;
-      grid-template-columns:1.1fr .9fr;
-      gap:14px;
-    }
-
-    .sectionTitle{
-      font-size:20px;
-      font-weight:800;
-      margin:0 0 12px;
-    }
-
-    table{
-      width:100%;
-      border-collapse:collapse;
-    }
-
-    .tableWrap{
-      overflow:auto;
-      border-radius:16px;
-      border:1px solid var(--line);
-    }
-
-    th,td{
-      padding:10px 12px;
-      border-bottom:1px solid rgba(255,255,255,.06);
-      text-align:left;
-      font-size:14px;
-      white-space:nowrap;
-    }
-
-    th{
-      position:sticky;
-      top:0;
-      background:#14223d;
-      z-index:2;
-    }
-
-    tr:hover td{
-      background:rgba(255,255,255,.025);
-    }
-
-    .pill{
-      display:inline-block;
-      padding:5px 10px;
-      border-radius:999px;
-      font-size:12px;
-      font-weight:800;
-    }
-
-    .pill.sergey{
-      background:rgba(59,130,246,.16);
-      color:#93c5fd;
-    }
-
-    .pill.slava{
-      background:rgba(239,68,68,.16);
-      color:#fca5a5;
-    }
-
-    .pill.stage{
-      background:rgba(245,158,11,.14);
-      color:#fcd34d;
-    }
-
-    .log{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-
-    .event{
-      border:1px solid var(--line);
-      background:var(--panel);
-      padding:12px;
-      border-radius:14px;
-    }
-
-    .blue{color:#93c5fd}
-    .red{color:#fca5a5}
-
-    .note{
-      font-size:13px;
-      color:var(--muted);
-      line-height:1.45;
-    }
-
+    .layout{display:grid;grid-template-columns:1.1fr .9fr;gap:14px;margin-top:14px}
+    .sectionTitle{font-size:20px;font-weight:800;margin:0 0 12px}
+    table{width:100%;border-collapse:collapse}
+    .tableWrap{overflow:auto;border-radius:16px;border:1px solid var(--line)}
+    th,td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.06);text-align:left;font-size:14px;white-space:nowrap}
+    th{position:sticky;top:0;background:#14223d;z-index:2}
+    .pill{display:inline-block;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:800}
+    .pill.sergey{background:rgba(59,130,246,.16);color:#93c5fd}
+    .pill.slava{background:rgba(239,68,68,.16);color:#fca5a5}
+    .pill.stage{background:rgba(245,158,11,.14);color:#fcd34d}
+    .log{display:flex;flex-direction:column;gap:10px}
+    .event{border:1px solid var(--line);background:var(--panel);padding:12px;border-radius:14px}
+    .blue{color:#93c5fd}.red{color:#fca5a5}
+    .note{font-size:13px;color:var(--muted);line-height:1.45}
+    code{background:rgba(255,255,255,.06);padding:2px 6px;border-radius:6px}
     @media (max-width:1180px){
       .hero{grid-template-columns:1fr}
       .scoreBig{order:-1}
       .layout{grid-template-columns:1fr}
       .grid{grid-template-columns:repeat(2,1fr)}
     }
-
     @media (max-width:720px){
       .wrap{padding:10px}
+      .grid{grid-template-columns:1fr}
       .hero{padding:12px;border-radius:18px}
       .person{padding:10px;border-radius:16px}
       .avatar{width:64px;height:64px;flex-basis:64px;border-radius:14px}
       .name{font-size:22px}
       .scoreBig .title{font-size:28px}
-      .grid{grid-template-columns:1fr}
       .card{padding:12px;border-radius:16px}
       th,td{font-size:13px;padding:8px 10px}
-      .toolbar{gap:8px}
-      .btn{padding:9px 12px;font-size:14px}
     }
   </style>
 </head>
@@ -266,9 +86,9 @@
   <section class="hero">
     <div class="person">
       <div class="avatar">
-        <div class="avatarFallback">В</div>
+        <img src="/assets/slava.jpg" alt="Вячеслав" width="86" height="86" decoding="async" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=&quot;avatarFallback&quot;>В</div>';">
       </div>
-      <div class="personText">
+      <div>
         <div class="sub">Игрок</div>
         <div class="name">Славик</div>
         <div class="sub">Команды и очки считаются автоматически</div>
@@ -278,27 +98,20 @@
     <div class="scoreBig">
       <div class="small">драфт чемпионата мира</div>
       <div class="title">Славик vs Сергей</div>
-      <div id="lastUpdate" class="small">Ожидание обновления...</div>
+      <div id="lastUpdate" class="small">Результаты внесены вручную</div>
     </div>
 
     <div class="person">
       <div class="avatar">
-        <div class="avatarFallback">С</div>
+        <img src="/assets/sergey.jpg" alt="Сергей" width="86" height="86" decoding="async" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=&quot;avatarFallback&quot;>С</div>';">
       </div>
-      <div class="personText">
+      <div>
         <div class="sub">Игрок</div>
         <div class="name">Сергей</div>
         <div class="sub">Группы: ничья считается, плей-офф: только победитель</div>
       </div>
     </div>
   </section>
-
-  <div class="toolbar">
-    <button class="btn" id="refreshBtn">Обновить результаты</button>
-    <button class="btn secondary" id="exportBtn">Экспорт настроек</button>
-    <label class="btn secondary" for="importFile" style="cursor:pointer">Импорт настроек</label>
-    <input id="importFile" type="file" accept="application/json" hidden>
-  </div>
 
   <section class="grid">
     <div class="card"><div class="muted">Очки Славика</div><div class="kpi" id="slavaPoints">0</div></div>
@@ -307,14 +120,12 @@
     <div class="card"><div class="muted">Команд у Сергея</div><div class="kpi" id="sergeyTeams">0</div></div>
   </section>
 
-  <section class="layout" style="margin-top:14px;">
+  <section class="layout">
     <div class="card">
       <h2 class="sectionTitle">Команды и владельцы</h2>
       <div class="tableWrap">
         <table id="teamsTable">
-          <thead>
-            <tr><th>#</th><th>Команда</th><th>Владелец</th></tr>
-          </thead>
+          <thead><tr><th>#</th><th>Команда</th><th>Владелец</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
@@ -324,7 +135,7 @@
       <h2 class="sectionTitle">Начисление очков</h2>
       <div id="log" class="log"></div>
       <p class="note" style="margin-top:12px">
-        Матчи подтягиваются автоматически через Cloudflare Worker и football-data.org.
+        Для обновления результатов меняй только массив <code>matches</code> внизу файла: у уже сыгранных матчей вписывай счет и ставь <code>status: "FINISHED"</code>.
       </p>
     </div>
   </section>
@@ -334,7 +145,7 @@
     <div class="tableWrap">
       <table id="matchesTable">
         <thead>
-          <tr><th>Стадия</th><th>Матч</th><th>Счёт</th><th>Статус</th><th>Очки Славик</th><th>Очки Сергей</th></tr>
+          <tr><th>Дата</th><th>Стадия</th><th>Матч</th><th>Счёт</th><th>Статус</th><th>Очки Славик</th><th>Очки Сергей</th></tr>
         </thead>
         <tbody></tbody>
       </table>
@@ -343,7 +154,98 @@
 </div>
 
 <script>
-const state = { teams: [], matches: [], lastUpdate: null };
+const teams = [
+  { team: "Мексика", owner: "Вячеслав" }, { team: "ЮАР", owner: "Вячеслав" }, { team: "Чехия", owner: "Вячеслав" }, { team: "Южная Корея", owner: "Вячеслав" },
+  { team: "США", owner: "Вячеслав" }, { team: "Англия", owner: "Вячеслав" }, { team: "Германия", owner: "Вячеслав" }, { team: "Нидерланды", owner: "Вячеслав" },
+  { team: "Бельгия", owner: "Вячеслав" }, { team: "Хорватия", owner: "Вячеслав" }, { team: "Швейцария", owner: "Вячеслав" }, { team: "Сенегал", owner: "Вячеслав" },
+  { team: "Эквадор", owner: "Вячеслав" }, { team: "Япония", owner: "Вячеслав" }, { team: "Норвегия", owner: "Вячеслав" }, { team: "Австрия", owner: "Вячеслав" },
+  { team: "Турция", owner: "Вячеслав" }, { team: "Кот‑д’Ивуар", owner: "Вячеслав" }, { team: "Канада", owner: "Вячеслав" }, { team: "Швеция", owner: "Вячеслав" },
+  { team: "Австралия", owner: "Вячеслав" }, { team: "Алжир", owner: "Вячеслав" }, { team: "Парагвай", owner: "Вячеслав" }, { team: "Иран", owner: "Вячеслав" },
+
+  { team: "Тунис", owner: "Сергей" }, { team: "ДР Конго", owner: "Сергей" }, { team: "Шотландия", owner: "Сергей" }, { team: "Гана", owner: "Сергей" },
+  { team: "Узбекистан", owner: "Сергей" }, { team: "Катар", owner: "Сергей" }, { team: "Босния и Герцеговина", owner: "Сергей" }, { team: "Панама", owner: "Сергей" },
+  { team: "Ирак", owner: "Сергей" }, { team: "Иордания", owner: "Сергей" }, { team: "Саудовская Аравия", owner: "Сергей" }, { team: "Новая Зеландия", owner: "Сергей" },
+  { team: "Кабо‑Верде", owner: "Сергей" }, { team: "Гаити", owner: "Сергей" }, { team: "Кюрасао", owner: "Сергей" }, { team: "Испания", owner: "Сергей" },
+  { team: "Франция", owner: "Сергей" }, { team: "Аргентина", owner: "Сергей" }, { team: "Бразилия", owner: "Сергей" }, { team: "Португалия", owner: "Сергей" },
+  { team: "Марокко", owner: "Сергей" }, { team: "Колумбия", owner: "Сергей" }, { team: "Уругвай", owner: "Сергей" }, { team: "Египет", owner: "Сергей" }
+];
+
+const matches = [
+  { date: "2026-06-11", stage: "GROUP_STAGE", homeTeam: "Мексика", awayTeam: "ЮАР", homeScore: 2, awayScore: 0, status: "FINISHED" },
+  { date: "2026-06-11", stage: "GROUP_STAGE", homeTeam: "Южная Корея", awayTeam: "Чехия", homeScore: 2, awayScore: 1, status: "FINISHED" },
+  { date: "2026-06-12", stage: "GROUP_STAGE", homeTeam: "Канада", awayTeam: "Босния и Герцеговина", homeScore: 1, awayScore: 1, status: "FINISHED" },
+  { date: "2026-06-13", stage: "GROUP_STAGE", homeTeam: "Катар", awayTeam: "Швейцария", homeScore: 1, awayScore: 1, status: "FINISHED" },
+  { date: "2026-06-13", stage: "GROUP_STAGE", homeTeam: "Бразилия", awayTeam: "Марокко", homeScore: 1, awayScore: 1, status: "FINISHED" },
+  { date: "2026-06-13", stage: "GROUP_STAGE", homeTeam: "Шотландия", awayTeam: "Гаити", homeScore: 1, awayScore: 0, status: "FINISHED" },
+  { date: "2026-06-12", stage: "GROUP_STAGE", homeTeam: "США", awayTeam: "Парагвай", homeScore: 4, awayScore: 1, status: "FINISHED" },
+  { date: "2026-06-14", stage: "GROUP_STAGE", homeTeam: "Австралия", awayTeam: "Турция", homeScore: 2, awayScore: 0, status: "FINISHED" },
+  { date: "2026-06-14", stage: "GROUP_STAGE", homeTeam: "Германия", awayTeam: "Кюрасао", homeScore: 7, awayScore: 1, status: "FINISHED" },
+  { date: "2026-06-14", stage: "GROUP_STAGE", homeTeam: "Кот‑д’Ивуар", awayTeam: "Эквадор", homeScore: 1, awayScore: 0, status: "FINISHED" },
+  { date: "2026-06-14", stage: "GROUP_STAGE", homeTeam: "Нидерланды", awayTeam: "Япония", homeScore: 2, awayScore: 2, status: "FINISHED" },
+  { date: "2026-06-14", stage: "GROUP_STAGE", homeTeam: "Швеция", awayTeam: "Тунис", homeScore: 5, awayScore: 1, status: "FINISHED" },
+  { date: "2026-06-15", stage: "GROUP_STAGE", homeTeam: "Бельгия", awayTeam: "Египет", homeScore: 1, awayScore: 1, status: "FINISHED" },
+  { date: "2026-06-15", stage: "GROUP_STAGE", homeTeam: "Иран", awayTeam: "Новая Зеландия", homeScore: 2, awayScore: 2, status: "FINISHED" },
+  { date: "2026-06-15", stage: "GROUP_STAGE", homeTeam: "Испания", awayTeam: "Кабо‑Верде", homeScore: 0, awayScore: 0, status: "FINISHED" },
+  { date: "2026-06-15", stage: "GROUP_STAGE", homeTeam: "Саудовская Аравия", awayTeam: "Уругвай", homeScore: 1, awayScore: 1, status: "FINISHED" },
+  { date: "2026-06-16", stage: "GROUP_STAGE", homeTeam: "Франция", awayTeam: "Сенегал", homeScore: 3, awayScore: 1, status: "FINISHED" },
+  { date: "2026-06-16", stage: "GROUP_STAGE", homeTeam: "Норвегия", awayTeam: "Ирак", homeScore: 4, awayScore: 1, status: "FINISHED" },
+  { date: "2026-06-16", stage: "GROUP_STAGE", homeTeam: "Аргентина", awayTeam: "Алжир", homeScore: 3, awayScore: 1, status: "FINISHED" },
+  { date: "2026-06-17", stage: "GROUP_STAGE", homeTeam: "Австрия", awayTeam: "Иордания", homeScore: 3, awayScore: 1, status: "FINISHED" },
+  { date: "2026-06-17", stage: "GROUP_STAGE", homeTeam: "Португалия", awayTeam: "ДР Конго", homeScore: 1, awayScore: 1, status: "FINISHED" },
+  { date: "2026-06-17", stage: "GROUP_STAGE", homeTeam: "Колумбия", awayTeam: "Узбекистан", homeScore: 3, awayScore: 1, status: "FINISHED" },
+  { date: "2026-06-17", stage: "GROUP_STAGE", homeTeam: "Англия", awayTeam: "Хорватия", homeScore: 4, awayScore: 2, status: "FINISHED" },
+  { date: "2026-06-17", stage: "GROUP_STAGE", homeTeam: "Гана", awayTeam: "Панама", homeScore: 1, awayScore: 0, status: "FINISHED" },
+  { date: "2026-06-18", stage: "GROUP_STAGE", homeTeam: "Чехия", awayTeam: "ЮАР", homeScore: 1, awayScore: 1, status: "FINISHED" },
+  { date: "2026-06-18", stage: "GROUP_STAGE", homeTeam: "Мексика", awayTeam: "Южная Корея", homeScore: 1, awayScore: 0, status: "FINISHED" },
+  { date: "2026-06-18", stage: "GROUP_STAGE", homeTeam: "Швейцария", awayTeam: "Босния и Герцеговина", homeScore: 4, awayScore: 1, status: "FINISHED" },
+  { date: "2026-06-18", stage: "GROUP_STAGE", homeTeam: "Канада", awayTeam: "Катар", homeScore: 6, awayScore: 0, status: "FINISHED" },
+  { date: "2026-06-19", stage: "GROUP_STAGE", homeTeam: "Марокко", awayTeam: "Шотландия", homeScore: 1, awayScore: 0, status: "FINISHED" },
+  { date: "2026-06-19", stage: "GROUP_STAGE", homeTeam: "Бразилия", awayTeam: "Гаити", homeScore: 3, awayScore: 0, status: "FINISHED" },
+  { date: "2026-06-19", stage: "GROUP_STAGE", homeTeam: "США", awayTeam: "Австралия", homeScore: 2, awayScore: 0, status: "FINISHED" },
+  { date: "2026-06-19", stage: "GROUP_STAGE", homeTeam: "Турция", awayTeam: "Парагвай", homeScore: 0, awayScore: 1, status: "FINISHED" },
+  { date: "2026-06-20", stage: "GROUP_STAGE", homeTeam: "Германия", awayTeam: "Кот‑д’Ивуар", homeScore: 2, awayScore: 1, status: "FINISHED" },
+  { date: "2026-06-20", stage: "GROUP_STAGE", homeTeam: "Эквадор", awayTeam: "Кюрасао", homeScore: 0, awayScore: 0, status: "FINISHED" },
+  { date: "2026-06-20", stage: "GROUP_STAGE", homeTeam: "Нидерланды", awayTeam: "Швеция", homeScore: 5, awayScore: 1, status: "FINISHED" },
+  { date: "2026-06-21", stage: "GROUP_STAGE", homeTeam: "Япония", awayTeam: "Тунис", homeScore: 4, awayScore: 0, status: "FINISHED" },
+  { date: "2026-06-21", stage: "GROUP_STAGE", homeTeam: "Бельгия", awayTeam: "Иран", homeScore: 0, awayScore: 0, status: "FINISHED" },
+  { date: "2026-06-21", stage: "GROUP_STAGE", homeTeam: "Испания", awayTeam: "Саудовская Аравия", homeScore: 4, awayScore: 0, status: "FINISHED" },
+  { date: "2026-06-21", stage: "GROUP_STAGE", homeTeam: "Уругвай", awayTeam: "Кабо‑Верде", homeScore: 2, awayScore: 2, status: "FINISHED" },
+
+  { date: "2026-06-21", stage: "GROUP_STAGE", homeTeam: "Новая Зеландия", awayTeam: "Египет", homeScore: null, awayScore: null, status: "SCHEDULED" },
+  { date: "2026-06-22", stage: "GROUP_STAGE", homeTeam: "Аргентина", awayTeam: "Австрия", homeScore: null, awayScore: null, status: "SCHEDULED" },
+  { date: "2026-06-22", stage: "GROUP_STAGE", homeTeam: "Франция", awayTeam: "Ирак", homeScore: null, awayScore: null, status: "SCHEDULED" },
+  { date: "2026-06-22", stage: "GROUP_STAGE", homeTeam: "Норвегия", awayTeam: "Сенегал", homeScore: null, awayScore: null, status: "SCHEDULED" },
+  { date: "2026-06-22", stage: "GROUP_STAGE", homeTeam: "Иордания", awayTeam: "Алжир", homeScore: null, awayScore: null, status: "SCHEDULED" },
+  { date: "2026-06-23", stage: "GROUP_STAGE", homeTeam: "Португалия", awayTeam: "Узбекистан", homeScore: null, awayScore: null, status: "SCHEDULED" },
+  { date: "2026-06-23", stage: "GROUP_STAGE", homeTeam: "Колумбия", awayTeam: "ДР Конго", homeScore: null, awayScore: null, status: "SCHEDULED" },
+  { date: "2026-06-23", stage: "GROUP_STAGE", homeTeam: "Англия", awayTeam: "Гана", homeScore: null, awayScore: null, status: "SCHEDULED" },
+  { date: "2026-06-23", stage: "GROUP_STAGE", homeTeam: "Панама", awayTeam: "Хорватия", homeScore: null, awayScore: null, status: "SCHEDULED" },
+  { date: "2026-06-24", stage: "GROUP_STAGE", homeTeam: "Чехия", awayTeam: "Мексика", homeScore: null, awayScore: null, status: "SCHEDULED" },
+  { date: "2026-06-24", stage: "GROUP_STAGE", homeTeam: "ЮАР", awayTeam: "Южная Корея", homeScore: null, awayScore: null, status: "SCHEDULED" },
+  { date: "2026-06-24", stage: "GROUP_STAGE", homeTeam: "Швейцария", awayTeam: "Канада", homeScore: null, awayScore: null, status: "SCHEDULED" },
+  { date: "2026-06-24", stage: "GROUP_STAGE", homeTeam: "Босния и Герцеговина", awayTeam: "Катар", homeScore: null, awayScore: null, status: "SCHEDULED" },
+  { date: "2026-06-24", stage: "GROUP_STAGE", homeTeam: "Шотландия", awayTeam: "Бразилия", homeScore: null, awayScore: null, status: "SCHEDULED" },
+  { date: "2026-06-24", stage: "GROUP_STAGE", homeTeam: "Марокко", awayTeam: "Гаити", homeScore: null, awayScore: null, status: "SCHEDULED" },
+  { date: "2026-06-25", stage: "GROUP_STAGE", homeTeam: "Турция", awayTeam: "США", homeScore: null, awayScore: null, status: "SCHEDULED" },
+  { date: "2026-06-25", stage: "GROUP_STAGE", homeTeam: "Парагвай", awayTeam: "Австралия", homeScore: null, awayScore: null, status: "SCHEDULED" },
+  { date: "2026-06-25", stage: "GROUP_STAGE", homeTeam: "Эквадор", awayTeam: "Германия", homeScore: null, awayScore: null, status: "SCHEDULED" },
+  { date: "2026-06-25", stage: "GROUP_STAGE", homeTeam: "Кюрасао", awayTeam: "Кот‑д’Ивуар", homeScore: null, awayScore: null, status: "SCHEDULED" },
+  { date: "2026-06-25", stage: "GROUP_STAGE", homeTeam: "Тунис", awayTeam: "Нидерланды", homeScore: null, awayScore: null, status: "SCHEDULED" },
+  { date: "2026-06-25", stage: "GROUP_STAGE", homeTeam: "Япония", awayTeam: "Швеция", homeScore: null, awayScore: null, status: "SCHEDULED" },
+  { date: "2026-06-26", stage: "GROUP_STAGE", homeTeam: "Новая Зеландия", awayTeam: "Бельгия", homeScore: null, awayScore: null, status: "SCHEDULED" },
+  { date: "2026-06-26", stage: "GROUP_STAGE", homeTeam: "Египет", awayTeam: "Иран", homeScore: null, awayScore: null, status: "SCHEDULED" },
+  { date: "2026-06-26", stage: "GROUP_STAGE", homeTeam: "Уругвай", awayTeam: "Испания", homeScore: null, awayScore: null, status: "SCHEDULED" },
+  { date: "2026-06-26", stage: "GROUP_STAGE", homeTeam: "Кабо‑Верде", awayTeam: "Саудовская Аравия", homeScore: null, awayScore: null, status: "SCHEDULED" },
+  { date: "2026-06-26", stage: "GROUP_STAGE", homeTeam: "Норвегия", awayTeam: "Франция", homeScore: null, awayScore: null, status: "SCHEDULED" },
+  { date: "2026-06-26", stage: "GROUP_STAGE", homeTeam: "Сенегал", awayTeam: "Ирак", homeScore: null, awayScore: null, status: "SCHEDULED" },
+  { date: "2026-06-27", stage: "GROUP_STAGE", homeTeam: "Иордания", awayTeam: "Аргентина", homeScore: null, awayScore: null, status: "SCHEDULED" },
+  { date: "2026-06-27", stage: "GROUP_STAGE", homeTeam: "Алжир", awayTeam: "Австрия", homeScore: null, awayScore: null, status: "SCHEDULED" },
+  { date: "2026-06-27", stage: "GROUP_STAGE", homeTeam: "Колумбия", awayTeam: "Португалия", homeScore: null, awayScore: null, status: "SCHEDULED" },
+  { date: "2026-06-27", stage: "GROUP_STAGE", homeTeam: "ДР Конго", awayTeam: "Узбекистан", homeScore: null, awayScore: null, status: "SCHEDULED" },
+  { date: "2026-06-27", stage: "GROUP_STAGE", homeTeam: "Панама", awayTeam: "Англия", homeScore: null, awayScore: null, status: "SCHEDULED" },
+  { date: "2026-06-27", stage: "GROUP_STAGE", homeTeam: "Хорватия", awayTeam: "Гана", homeScore: null, awayScore: null, status: "SCHEDULED" }
+];
+
 const ownerNames = { "Вячеслав": "Славик", "Сергей": "Сергей" };
 
 const els = {
@@ -357,107 +259,21 @@ const els = {
   lastUpdate: document.getElementById('lastUpdate')
 };
 
-const teamNameMap = {
-  "Mexico": "Мексика",
-  "South Africa": "ЮАР",
-  "Czech Republic": "Чехия",
-  "Czechia": "Чехия",
-  "Korea Republic": "Южная Корея",
-  "South Korea": "Южная Корея",
-  "United States": "США",
-  "USA": "США",
-  "England": "Англия",
-  "Germany": "Германия",
-  "Netherlands": "Нидерланды",
-  "Belgium": "Бельгия",
-  "Croatia": "Хорватия",
-  "Switzerland": "Швейцария",
-  "Senegal": "Сенегал",
-  "Ecuador": "Эквадор",
-  "Japan": "Япония",
-  "Norway": "Норвегия",
-  "Austria": "Австрия",
-  "Turkey": "Турция",
-  "Côte d'Ivoire": "Кот‑д’Ивуар",
-  "Ivory Coast": "Кот‑д’Ивуар",
-  "Canada": "Канада",
-  "Sweden": "Швеция",
-  "Australia": "Австралия",
-  "Algeria": "Алжир",
-  "Paraguay": "Парагвай",
-  "Iran": "Иран",
-  "Tunisia": "Тунис",
-  "DR Congo": "ДР Конго",
-  "Congo DR": "ДР Конго",
-  "Scotland": "Шотландия",
-  "Ghana": "Гана",
-  "Uzbekistan": "Узбекистан",
-  "Qatar": "Катар",
-  "Bosnia and Herzegovina": "Босния и Герцеговина",
-  "Bosnia-Herzegovina": "Босния и Герцеговина",
-  "Bosnia & Herzegovina": "Босния и Герцеговина",
-  "Panama": "Панама",
-  "Iraq": "Ирак",
-  "Jordan": "Иордания",
-  "Saudi Arabia": "Саудовская Аравия",
-  "New Zealand": "Новая Зеландия",
-  "Cape Verde Islands": "Кабо‑Верде",
-  "Cape Verde": "Кабо‑Верде",
-  "Haiti": "Гаити",
-  "Curaçao": "Кюрасао",
-  "Curacao": "Кюрасао",
-  "Spain": "Испания",
-  "France": "Франция",
-  "Argentina": "Аргентина",
-  "Brazil": "Бразилия",
-  "Portugal": "Португалия",
-  "Morocco": "Марокко",
-  "Colombia": "Колумбия",
-  "Uruguay": "Уругвай",
-  "Egypt": "Египет"
-};
-
-function mapTeamName(name){
-  return teamNameMap[name] || name;
-}
-
-function prettyStatus(status){
-  const map = {
-    SCHEDULED: 'Запланирован',
-    TIMED: 'Назначен',
-    IN_PLAY: 'Идёт',
-    PAUSED: 'Перерыв',
-    FINISHED: 'Завершён',
-    POSTPONED: 'Перенесён',
-    SUSPENDED: 'Остановлен',
-    CANCELLED: 'Отменён',
-    AWARDED: 'Тех. результат'
-  };
-  return map[status] || status;
-}
-
 function normalize(s){
-  return (s || '')
-    .toString()
-    .trim()
-    .toLowerCase()
-    .normalize('NFD')
+  return (s || '').toString().trim().toLowerCase().normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .replace(/[’'`´]/g, "'")
     .replace(/[‑–—−]/g, '-')
     .replace(/\s+/g, ' ');
 }
-
 function ownerOf(team){
-  const x = state.teams.find(t => normalize(t.team) === normalize(team));
+  const x = teams.find(t => normalize(t.team) === normalize(team));
   return x ? x.owner : null;
 }
-
 function stageType(stage){
   const s = normalize(stage);
-  return s.includes('group') || s.includes('груп') ? 'group' : 'knockout';
+  return s.includes('group') ? 'group' : 'knockout';
 }
-
 function prettyStage(stage){
   const map = {
     GROUP_STAGE: 'Групповой этап',
@@ -470,12 +286,18 @@ function prettyStage(stage){
   };
   return map[stage] || stage;
 }
+function prettyStatus(status){
+  const map = { SCHEDULED:'Запланирован', FINISHED:'Завершён', IN_PLAY:'Идёт' };
+  return map[status] || status;
+}
+function prettyDate(date){
+  return new Date(date + 'T12:00:00').toLocaleDateString('ru-RU');
+}
 
 function calcPoints(match){
   const oh = ownerOf(match.homeTeam);
   const oa = ownerOf(match.awayTeam);
-  let sl = 0;
-  let se = 0;
+  let sl = 0, se = 0;
 
   if (match.status !== 'FINISHED' || match.homeScore == null || match.awayScore == null) {
     return { sl, se, text: 'Матч не завершён' };
@@ -502,44 +324,38 @@ function calcPoints(match){
       }
     }
   } else {
-    const winner =
-      match.homeScore > match.awayScore ? 'HOME' :
-      match.homeScore < match.awayScore ? 'AWAY' :
-      null;
-
-    if (winner === 'HOME') {
+    if (match.homeScore > match.awayScore) {
       if (oh === 'Вячеслав') sl += 3;
       if (oh === 'Сергей') se += 3;
-    }
-    if (winner === 'AWAY') {
+    } else if (match.homeScore < match.awayScore) {
       if (oa === 'Вячеслав') sl += 3;
       if (oa === 'Сергей') se += 3;
     }
   }
 
-  const text = `${match.homeTeam} ${match.homeScore}:${match.awayScore} ${match.awayTeam}`;
-  return { sl, se, text };
+  return {
+    sl, se,
+    text: `${match.homeTeam} ${match.homeScore}:${match.awayScore} ${match.awayTeam}`
+  };
 }
 
 function renderTeams(){
-  els.teamsTable.innerHTML = state.teams.map((t, i) => `
+  els.teamsTable.innerHTML = teams.map((t, i) => `
     <tr>
       <td>${i + 1}</td>
       <td>${t.team}</td>
       <td><span class="pill ${t.owner === 'Сергей' ? 'sergey' : 'slava'}">${ownerNames[t.owner]}</span></td>
     </tr>
   `).join('');
-
-  els.slavaTeams.textContent = state.teams.filter(t => t.owner === 'Вячеслав').length;
-  els.sergeyTeams.textContent = state.teams.filter(t => t.owner === 'Сергей').length;
+  els.slavaTeams.textContent = teams.filter(t => t.owner === 'Вячеслав').length;
+  els.sergeyTeams.textContent = teams.filter(t => t.owner === 'Сергей').length;
 }
 
 function renderMatches(){
-  let sl = 0;
-  let se = 0;
+  let sl = 0, se = 0;
   const logs = [];
 
-  els.matchesTable.innerHTML = state.matches.map(m => {
+  els.matchesTable.innerHTML = matches.map(m => {
     const p = calcPoints(m);
     sl += p.sl;
     se += p.se;
@@ -547,7 +363,7 @@ function renderMatches(){
     if (m.status === 'FINISHED' && (p.sl || p.se)) {
       logs.push(`
         <div class="event">
-          <div><span class="pill stage">${prettyStage(m.stage)}</span></div>
+          <div><span class="pill stage">${prettyDate(m.date)} · ${prettyStage(m.stage)}</span></div>
           <div style="margin-top:6px;font-weight:700">${p.text}</div>
           <div class="muted" style="margin-top:4px">
             Славик: <span class="red">+${p.sl}</span> · Сергей: <span class="blue">+${p.se}</span>
@@ -558,6 +374,7 @@ function renderMatches(){
 
     return `
       <tr>
+        <td>${prettyDate(m.date)}</td>
         <td>${prettyStage(m.stage)}</td>
         <td>${m.homeTeam} — ${m.awayTeam}</td>
         <td>${m.homeScore ?? '-'}:${m.awayScore ?? '-'}</td>
@@ -570,111 +387,12 @@ function renderMatches(){
 
   els.slavaPoints.textContent = sl;
   els.sergeyPoints.textContent = se;
-  els.log.innerHTML = logs.length
-    ? logs.join('')
-    : '<div class="event">Пока нет завершённых матчей для начисления.</div>';
+  els.log.innerHTML = logs.length ? logs.join('') : '<div class="event">Пока нет завершённых матчей для начисления.</div>';
+  els.lastUpdate.textContent = 'Последнее ручное обновление: ' + new Date().toLocaleString('ru-RU');
 }
 
-async function loadTeams(){
-  let saved = null;
-
-  try {
-    saved = localStorage.getItem('svs_teams');
-  } catch (e) {
-    saved = null;
-  }
-
-  if (saved) {
-    state.teams = JSON.parse(saved);
-  } else {
-    const resp = await fetch('/teams.json');
-    if (!resp.ok) throw new Error('teams.json not found');
-    state.teams = await resp.json();
-  }
-
-  try {
-    localStorage.setItem('svs_teams', JSON.stringify(state.teams));
-  } catch (e) {}
-
-  renderTeams();
-}
-
-async function fetchMatches(){
-  try {
-    const resp = await fetch('/api/scoreboard?t=' + Date.now(), {
-      cache: 'no-store'
-    });
-
-    if (!resp.ok) {
-      const text = await resp.text();
-      throw new Error('API error: ' + resp.status + ' ' + text);
-    }
-
-    const data = await resp.json();
-
-    state.matches = (data.matches || []).map(m => ({
-      id: m.id,
-      stage: m.stage || 'GROUP_STAGE',
-      homeTeam: mapTeamName(m.homeTeam || ''),
-      awayTeam: mapTeamName(m.awayTeam || ''),
-      homeScore: Number.isFinite(m.homeScore) ? m.homeScore : null,
-      awayScore: Number.isFinite(m.awayScore) ? m.awayScore : null,
-      status: m.status || 'SCHEDULED'
-    })).filter(m => ownerOf(m.homeTeam) || ownerOf(m.awayTeam));
-
-    state.lastUpdate = data.updatedAt
-      ? new Date(data.updatedAt).toLocaleString('ru-RU')
-      : new Date().toLocaleString('ru-RU');
-
-    els.lastUpdate.textContent =
-      'Последнее обновление: ' + state.lastUpdate + ' · Cloudflare API';
-
-    renderMatches();
-  } catch (e) {
-    console.error('fetchMatches failed:', e);
-    els.lastUpdate.textContent =
-      'Ошибка API: сеть или соединение недоступны';
-    state.matches = [];
-    renderMatches();
-  }
-}
-
-function exportSettings(){
-  const blob = new Blob([JSON.stringify({
-    teams: state.teams,
-    exportedAt: new Date().toISOString()
-  }, null, 2)], { type:'application/json' });
-
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'slavik-vs-sergey-settings.json';
-  a.click();
-}
-
-function importSettings(file){
-  const reader = new FileReader();
-  reader.onload = () => {
-    const data = JSON.parse(reader.result);
-    if (data.teams) {
-      state.teams = data.teams;
-      try {
-        localStorage.setItem('svs_teams', JSON.stringify(state.teams));
-      } catch (e) {}
-      renderTeams();
-      renderMatches();
-    }
-  };
-  reader.readAsText(file);
-}
-
-document.getElementById('refreshBtn').addEventListener('click', fetchMatches);
-document.getElementById('exportBtn').addEventListener('click', exportSettings);
-document.getElementById('importFile').addEventListener('change', e => {
-  if (e.target.files[0]) importSettings(e.target.files[0]);
-});
-
-loadTeams().then(fetchMatches);
-setInterval(fetchMatches, 60 * 60 * 1000);
+renderTeams();
+renderMatches();
 </script>
 </body>
 </html>
