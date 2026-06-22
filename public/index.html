@@ -24,20 +24,57 @@
     }
     .wrap{max-width:1320px;margin:0 auto;padding:16px}
     .hero{
-      display:grid;grid-template-columns:minmax(280px,1fr) auto minmax(280px,1fr);
-      gap:14px;align-items:center;background:linear-gradient(135deg,rgba(22,163,74,.12),rgba(59,130,246,.12));
-      border:1px solid var(--line);border-radius:24px;padding:18px;
+      display:grid;
+      grid-template-columns:minmax(280px,1fr) auto minmax(280px,1fr);
+      gap:14px;
+      align-items:center;
+      background:linear-gradient(135deg,rgba(22,163,74,.12),rgba(59,130,246,.12));
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:18px;
     }
     .person{
-      display:flex;gap:14px;align-items:center;background:rgba(255,255,255,.03);
-      border:1px solid var(--line);padding:12px;border-radius:20px;min-width:0;
+      display:flex;
+      gap:14px;
+      align-items:center;
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      padding:12px;
+      border-radius:20px;
+      min-width:0;
     }
     .avatar{
-      width:86px;height:86px;border-radius:18px;overflow:hidden;border:2px solid rgba(255,255,255,.08);
-      background:linear-gradient(135deg,#10233f,#17345e);flex:0 0 86px;display:flex;align-items:center;justify-content:center;
+      width:86px;
+      height:86px;
+      border-radius:18px;
+      overflow:hidden;
+      border:2px solid rgba(255,255,255,.08);
+      background:linear-gradient(135deg,#10233f,#17345e);
+      flex:0 0 86px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
-    .avatar img{width:100%;height:100%;object-fit:cover;display:block}
-    .avatarFallback{font-size:26px;font-weight:900;color:#dbeafe}
+    .avatar picture,
+    .avatar img{
+      width:100%;
+      height:100%;
+      display:block;
+    }
+    .avatar img{
+      object-fit:cover;
+    }
+    .avatarFallback{
+      width:100%;
+      height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:26px;
+      font-weight:900;
+      color:#dbeafe;
+      background:linear-gradient(135deg,#17345e,#10233f);
+    }
     .name{font-size:26px;font-weight:800;line-height:1.05}
     .sub{color:var(--muted);font-size:13px;line-height:1.35}
     .scoreBig{text-align:center}
@@ -51,7 +88,13 @@
     .sectionTitle{font-size:20px;font-weight:800;margin:0 0 12px}
     table{width:100%;border-collapse:collapse}
     .tableWrap{overflow:auto;border-radius:16px;border:1px solid var(--line)}
-    th,td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.06);text-align:left;font-size:14px;white-space:nowrap}
+    th,td{
+      padding:10px 12px;
+      border-bottom:1px solid rgba(255,255,255,.06);
+      text-align:left;
+      font-size:14px;
+      white-space:nowrap;
+    }
     th{position:sticky;top:0;background:#14223d;z-index:2}
     .pill{display:inline-block;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:800}
     .pill.sergey{background:rgba(59,130,246,.16);color:#93c5fd}
@@ -59,7 +102,8 @@
     .pill.stage{background:rgba(245,158,11,.14);color:#fcd34d}
     .log{display:flex;flex-direction:column;gap:10px}
     .event{border:1px solid var(--line);background:var(--panel);padding:12px;border-radius:14px}
-    .blue{color:#93c5fd}.red{color:#fca5a5}
+    .blue{color:#93c5fd}
+    .red{color:#fca5a5}
     .note{font-size:13px;color:var(--muted);line-height:1.45}
     code{background:rgba(255,255,255,.06);padding:2px 6px;border-radius:6px}
     @media (max-width:1180px){
@@ -86,7 +130,18 @@
   <section class="hero">
     <div class="person">
       <div class="avatar">
-        <img src="/assets/slava.jpg" alt="Вячеслав" width="86" height="86" decoding="async" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=&quot;avatarFallback&quot;>В</div>';">
+        <picture>
+          <source srcset="/assets/slava.webp?v=6" type="image/webp">
+          <source srcset="/assets/slava.jpg?v=6" type="image/jpeg">
+          <img
+            src="/assets/slava.jpg?v=6"
+            alt="Вячеслав"
+            width="86"
+            height="86"
+            decoding="async"
+            fetchpriority="high"
+            onerror="this.closest('.avatar').innerHTML='<div class=&quot;avatarFallback&quot;>В</div>';">
+        </picture>
       </div>
       <div>
         <div class="sub">Игрок</div>
@@ -103,7 +158,18 @@
 
     <div class="person">
       <div class="avatar">
-        <img src="/assets/sergey.jpg" alt="Сергей" width="86" height="86" decoding="async" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=&quot;avatarFallback&quot;>С</div>';">
+        <picture>
+          <source srcset="/assets/sergey.webp?v=6" type="image/webp">
+          <source srcset="/assets/sergey.jpg?v=6" type="image/jpeg">
+          <img
+            src="/assets/sergey.jpg?v=6"
+            alt="Сергей"
+            width="86"
+            height="86"
+            decoding="async"
+            fetchpriority="high"
+            onerror="this.closest('.avatar').innerHTML='<div class=&quot;avatarFallback&quot;>С</div>';">
+        </picture>
       </div>
       <div>
         <div class="sub">Игрок</div>
@@ -135,7 +201,7 @@
       <h2 class="sectionTitle">Начисление очков</h2>
       <div id="log" class="log"></div>
       <p class="note" style="margin-top:12px">
-        Для обновления результатов меняй только массив <code>matches</code> внизу файла: у уже сыгранных матчей вписывай счет и ставь <code>status: "FINISHED"</code>.
+        Для обновления результатов меняй только массив <code>matches</code> внизу файла.
       </p>
     </div>
   </section>
@@ -245,8 +311,8 @@ const matches = [
   { date: "2026-06-21", stage: "GROUP_STAGE", homeTeam: "Бельгия", awayTeam: "Иран", homeScore: 0, awayScore: 0, status: "FINISHED" },
   { date: "2026-06-21", stage: "GROUP_STAGE", homeTeam: "Испания", awayTeam: "Саудовская Аравия", homeScore: 4, awayScore: 0, status: "FINISHED" },
   { date: "2026-06-21", stage: "GROUP_STAGE", homeTeam: "Уругвай", awayTeam: "Кабо‑Верде", homeScore: 2, awayScore: 2, status: "FINISHED" },
+  { date: "2026-06-21", stage: "GROUP_STAGE", homeTeam: "Новая Зеландия", awayTeam: "Египет", homeScore: 1, awayScore: 3, status: "FINISHED" },
 
-  { date: "2026-06-21", stage: "GROUP_STAGE", homeTeam: "Новая Зеландия", awayTeam: "Египет", homeScore: null, awayScore: null, status: "SCHEDULED" },
   { date: "2026-06-22", stage: "GROUP_STAGE", homeTeam: "Аргентина", awayTeam: "Австрия", homeScore: null, awayScore: null, status: "SCHEDULED" },
   { date: "2026-06-22", stage: "GROUP_STAGE", homeTeam: "Франция", awayTeam: "Ирак", homeScore: null, awayScore: null, status: "SCHEDULED" },
   { date: "2026-06-22", stage: "GROUP_STAGE", homeTeam: "Норвегия", awayTeam: "Сенегал", homeScore: null, awayScore: null, status: "SCHEDULED" },
@@ -328,7 +394,6 @@ function prettyStatus(status){
 function prettyDate(date){
   return new Date(date + 'T12:00:00').toLocaleDateString('ru-RU');
 }
-
 function calcPoints(match){
   const oh = ownerOf(match.homeTeam);
   const oa = ownerOf(match.awayTeam);
@@ -368,10 +433,7 @@ function calcPoints(match){
     }
   }
 
-  return {
-    sl, se,
-    text: `${match.homeTeam} ${match.homeScore}:${match.awayScore} ${match.awayTeam}`
-  };
+  return { sl, se, text: `${match.homeTeam} ${match.homeScore}:${match.awayScore} ${match.awayTeam}` };
 }
 
 function renderTeams(){
