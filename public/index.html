@@ -6,14 +6,20 @@
   <title>Славик vs Сергей</title>
   <meta name="theme-color" content="#0f766e">
   <link rel="manifest" href="/app.webmanifest">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     :root{
       --bg:#08111f;
       --panel:#0f1b31;
+      --panel2:#14223d;
       --text:#eff4ff;
       --muted:#9eb0d1;
       --line:#243554;
       --card:#101a2d;
+      --slava:#ef4444;
+      --sergey:#3b82f6;
+      --gold:#f59e0b;
+      --green:#22c55e;
     }
     *{box-sizing:border-box}
     body{
@@ -22,7 +28,7 @@
       background:radial-gradient(circle at top,#163154 0,#08111f 45%,#050b14 100%);
       color:var(--text);
     }
-    .wrap{max-width:1320px;margin:0 auto;padding:16px}
+    .wrap{max-width:1360px;margin:0 auto;padding:16px}
     .hero{
       display:grid;
       grid-template-columns:minmax(280px,1fr) auto minmax(280px,1fr);
@@ -44,13 +50,13 @@
       min-width:0;
     }
     .avatar{
-      width:86px;
-      height:86px;
-      border-radius:18px;
+      width:92px;
+      height:92px;
+      border-radius:20px;
       overflow:hidden;
       border:2px solid rgba(255,255,255,.08);
       background:linear-gradient(135deg,#10233f,#17345e);
-      flex:0 0 86px;
+      flex:0 0 92px;
       display:flex;
       align-items:center;
       justify-content:center;
@@ -61,33 +67,62 @@
       height:100%;
       display:block;
     }
-    .avatar img{
-      object-fit:cover;
-    }
+    .avatar img{object-fit:cover}
     .avatarFallback{
       width:100%;
       height:100%;
       display:flex;
       align-items:center;
       justify-content:center;
-      font-size:26px;
+      font-size:28px;
       font-weight:900;
       color:#dbeafe;
       background:linear-gradient(135deg,#17345e,#10233f);
     }
-    .name{font-size:26px;font-weight:800;line-height:1.05}
+    .name{font-size:28px;font-weight:900;line-height:1.05}
     .sub{color:var(--muted);font-size:13px;line-height:1.35}
+    .miniStats{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:8px;
+      margin-top:10px;
+    }
+    .miniStat{
+      background:rgba(255,255,255,.035);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:8px 10px;
+    }
+    .miniStat .label{font-size:11px;color:var(--muted)}
+    .miniStat .value{font-size:20px;font-weight:900;margin-top:4px}
     .scoreBig{text-align:center}
-    .scoreBig .title{font-size:34px;font-weight:900;line-height:1.05}
+    .scoreBig .title{font-size:36px;font-weight:900;line-height:1.05}
     .scoreBig .small{color:var(--muted)}
     .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:14px}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:16px;min-width:0}
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:16px;
+      min-width:0;
+    }
     .kpi{font-size:32px;font-weight:900;margin-top:8px}
     .muted{color:var(--muted)}
     .layout{display:grid;grid-template-columns:1.1fr .9fr;gap:14px;margin-top:14px}
-    .sectionTitle{font-size:20px;font-weight:800;margin:0 0 12px}
-    table{width:100%;border-collapse:collapse}
-    .tableWrap{overflow:auto;border-radius:16px;border:1px solid var(--line)}
+    .sectionTitle{
+      font-size:20px;
+      font-weight:800;
+      margin:0 0 12px;
+    }
+    table{
+      width:100%;
+      border-collapse:collapse;
+    }
+    .tableWrap{
+      overflow:auto;
+      border-radius:16px;
+      border:1px solid var(--line);
+    }
     th,td{
       padding:10px 12px;
       border-bottom:1px solid rgba(255,255,255,.06);
@@ -95,17 +130,61 @@
       font-size:14px;
       white-space:nowrap;
     }
-    th{position:sticky;top:0;background:#14223d;z-index:2}
-    .pill{display:inline-block;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:800}
+    th{
+      position:sticky;
+      top:0;
+      background:#14223d;
+      z-index:2;
+    }
+    tr:hover td{background:rgba(255,255,255,.025)}
+    .pill{
+      display:inline-block;
+      padding:5px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:800;
+    }
     .pill.sergey{background:rgba(59,130,246,.16);color:#93c5fd}
     .pill.slava{background:rgba(239,68,68,.16);color:#fca5a5}
     .pill.stage{background:rgba(245,158,11,.14);color:#fcd34d}
-    .log{display:flex;flex-direction:column;gap:10px}
-    .event{border:1px solid var(--line);background:var(--panel);padding:12px;border-radius:14px}
+    .pill.out{background:rgba(239,68,68,.16);color:#fecaca}
+    .pill.in{background:rgba(34,197,94,.16);color:#bbf7d0}
+    .log{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      max-height:560px;
+      overflow:auto;
+      padding-right:4px;
+    }
+    .event{
+      border:1px solid var(--line);
+      background:var(--panel);
+      padding:12px;
+      border-radius:14px;
+    }
     .blue{color:#93c5fd}
     .red{color:#fca5a5}
-    .note{font-size:13px;color:var(--muted);line-height:1.45}
-    code{background:rgba(255,255,255,.06);padding:2px 6px;border-radius:6px}
+    .green{color:#bbf7d0}
+    .chartCard{margin-top:14px}
+    .chartWrap{
+      position:relative;
+      min-height:340px;
+      background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:14px;
+    }
+    .note{
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.45;
+    }
+    code{
+      background:rgba(255,255,255,.06);
+      padding:2px 6px;
+      border-radius:6px;
+    }
     @media (max-width:1180px){
       .hero{grid-template-columns:1fr}
       .scoreBig{order:-1}
@@ -117,11 +196,13 @@
       .grid{grid-template-columns:1fr}
       .hero{padding:12px;border-radius:18px}
       .person{padding:10px;border-radius:16px}
-      .avatar{width:64px;height:64px;flex-basis:64px;border-radius:14px}
+      .avatar{width:68px;height:68px;flex-basis:68px;border-radius:14px}
       .name{font-size:22px}
       .scoreBig .title{font-size:28px}
       .card{padding:12px;border-radius:16px}
       th,td{font-size:13px;padding:8px 10px}
+      .miniStats{grid-template-columns:1fr}
+      .chartWrap{min-height:280px;padding:8px}
     }
   </style>
 </head>
@@ -136,24 +217,39 @@
           <img
             src="/assets/slava.jpg?v=6"
             alt="Вячеслав"
-            width="86"
-            height="86"
+            width="92"
+            height="92"
             decoding="async"
             fetchpriority="high"
             onerror="this.closest('.avatar').innerHTML='<div class=&quot;avatarFallback&quot;>В</div>';">
         </picture>
       </div>
-      <div>
+      <div style="min-width:0;width:100%;">
         <div class="sub">Игрок</div>
         <div class="name">Славик</div>
-        <div class="sub">Команды и очки считаются автоматически</div>
+        <div class="sub">Очки и остаток команд считаются автоматически</div>
+        <div class="miniStats">
+          <div class="miniStat">
+            <div class="label">Очки</div>
+            <div class="value" id="slavaPointsHero">0</div>
+          </div>
+          <div class="miniStat">
+            <div class="label">Старт команд</div>
+            <div class="value" id="slavaStartTeams">0</div>
+          </div>
+          <div class="miniStat">
+            <div class="label">Осталось</div>
+            <div class="value" id="slavaAliveTeams">0</div>
+          </div>
+        </div>
       </div>
     </div>
 
     <div class="scoreBig">
       <div class="small">драфт чемпионата мира</div>
       <div class="title">Славик vs Сергей</div>
-      <div id="lastUpdate" class="small">Результаты внесены вручную</div>
+      <div id="leaderLine" class="small">Лидер определится после подсчёта</div>
+      <div id="lastUpdate" class="small" style="margin-top:6px;">Результаты внесены вручную</div>
     </div>
 
     <div class="person">
@@ -164,17 +260,30 @@
           <img
             src="/assets/sergey.jpg?v=6"
             alt="Сергей"
-            width="86"
-            height="86"
+            width="92"
+            height="92"
             decoding="async"
             fetchpriority="high"
             onerror="this.closest('.avatar').innerHTML='<div class=&quot;avatarFallback&quot;>С</div>';">
         </picture>
       </div>
-      <div>
+      <div style="min-width:0;width:100%;">
         <div class="sub">Игрок</div>
         <div class="name">Сергей</div>
         <div class="sub">Группы: ничья считается, плей-офф: только победитель</div>
+        <div class="miniStats">
+          <div class="miniStat">
+            <div class="label">Очки</div>
+            <div class="value" id="sergeyPointsHero">0</div>
+          </div>
+          <div class="miniStat">
+            <div class="label">Старт команд</div>
+            <div class="value" id="sergeyStartTeams">0</div>
+          </div>
+          <div class="label">Осталось</div>
+            <div class="value" id="sergeyAliveTeams">0</div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -182,19 +291,34 @@
   <section class="grid">
     <div class="card"><div class="muted">Очки Славика</div><div class="kpi" id="slavaPoints">0</div></div>
     <div class="card"><div class="muted">Очки Сергея</div><div class="kpi" id="sergeyPoints">0</div></div>
-    <div class="card"><div class="muted">Команд у Славика</div><div class="kpi" id="slavaTeams">0</div></div>
-    <div class="card"><div class="muted">Команд у Сергея</div><div class="kpi" id="sergeyTeams">0</div></div>
+    <div class="card"><div class="muted">Старт команд Славика</div><div class="kpi" id="slavaTeams">0</div></div>
+    <div class="card"><div class="muted">Старт команд Сергея</div><div class="kpi" id="sergeyTeams">0</div></div>
+  </section>
+
+  <section class="card chartCard">
+    <h2 class="sectionTitle">График накопленных очков</h2>
+    <div class="chartWrap">
+      <canvas id="scoreChart"></canvas>
+    </div>
+    <p class="note" style="margin-top:12px">
+      Линии строятся по сумме очков после каждого завершённого матча. Это обычный line chart, который хорошо подходит для показа динамики значений во времени. [web:1650][web:1659]
+    </p>
   </section>
 
   <section class="layout">
     <div class="card">
-      <h2 class="sectionTitle">Команды и владельцы</h2>
+      <h2 class="sectionTitle">Команды и статус</h2>
       <div class="tableWrap">
         <table id="teamsTable">
-          <thead><tr><th>#</th><th>Команда</th><th>Владелец</th></tr></thead>
+          <thead>
+            <tr><th>#</th><th>Команда</th><th>Владелец</th><th>Статус</th></tr>
+          </thead>
           <tbody></tbody>
         </table>
       </div>
+      <p class="note" style="margin-top:12px">
+        Когда команда вылетит, просто поставь у неё <code>eliminated: true</code> в массиве <code>teams</code>.
+      </p>
     </div>
 
     <div class="card">
@@ -221,64 +345,64 @@
 
 <script>
 const teams = [
-  {"team":"Испания","owner":"Сергей"},
-  {"team":"Франция","owner":"Сергей"},
-  {"team":"Аргентина","owner":"Сергей"},
-  {"team":"Англия","owner":"Вячеслав"},
-  {"team":"Бразилия","owner":"Вячеслав"},
-  {"team":"Португалия","owner":"Сергей"},
-  {"team":"Германия","owner":"Вячеслав"},
-  {"team":"Нидерланды","owner":"Вячеслав"},
-  {"team":"Марокко","owner":"Сергей"},
-  {"team":"Бельгия","owner":"Вячеслав"},
-  {"team":"Хорватия","owner":"Сергей"},
-  {"team":"Уругвай","owner":"Вячеслав"},
-  {"team":"Колумбия","owner":"Сергей"},
-  {"team":"Швейцария","owner":"Вячеслав"},
-  {"team":"Сенегал","owner":"Вячеслав"},
-  {"team":"Эквадор","owner":"Сергей"},
-  {"team":"США","owner":"Сергей"},
-  {"team":"Мексика","owner":"Сергей"},
-  {"team":"Япония","owner":"Сергей"},
-  {"team":"Норвегия","owner":"Сергей"},
-  {"team":"Австрия","owner":"Сергей"},
-  {"team":"Турция","owner":"Сергей"},
-  {"team":"Кот‑д’Ивуар","owner":"Вячеслав"},
-  {"team":"Египет","owner":"Сергей"},
-  {"team":"Канада","owner":"Вячеслав"},
-  {"team":"Швеция","owner":"Вячеслав"},
-  {"team":"Южная Корея","owner":"Вячеслав"},
-  {"team":"Австралия","owner":"Вячеслав"},
-  {"team":"Алжир","owner":"Вячеслав"},
-  {"team":"Парагвай","owner":"Вячеслав"},
-  {"team":"Иран","owner":"Вячеслав"},
-  {"team":"Тунис","owner":"Сергей"},
-  {"team":"ДР Конго","owner":"Вячеслав"},
-  {"team":"Шотландия","owner":"Вячеслав"},
-  {"team":"Гана","owner":"Вячеслав"},
-  {"team":"Узбекистан","owner":"Вячеслав"},
-  {"team":"ЮАР","owner":"Сергей"},
-  {"team":"Катар","owner":"Сергей"},
-  {"team":"Чехия","owner":"Вячеслав"},
-  {"team":"Босния и Герцеговина","owner":"Сергей"},
-  {"team":"Панама","owner":"Сергей"},
-  {"team":"Ирак","owner":"Вячеслав"},
-  {"team":"Иордания","owner":"Вячеслав"},
-  {"team":"Саудовская Аравия","owner":"Сергей"},
-  {"team":"Новая Зеландия","owner":"Сергей"},
-  {"team":"Кабо‑Верде","owner":"Вячеслав"},
-  {"team":"Гаити","owner":"Сергей"},
-  {"team":"Кюрасао","owner":"Сергей"}
+  {"team":"Испания","owner":"Сергей","eliminated":false},
+  {"team":"Франция","owner":"Сергей","eliminated":false},
+  {"team":"Аргентина","owner":"Сергей","eliminated":false},
+  {"team":"Англия","owner":"Вячеслав","eliminated":false},
+  {"team":"Бразилия","owner":"Вячеслав","eliminated":false},
+  {"team":"Португалия","owner":"Сергей","eliminated":false},
+  {"team":"Германия","owner":"Вячеслав","eliminated":false},
+  {"team":"Нидерланды","owner":"Вячеслав","eliminated":false},
+  {"team":"Марокко","owner":"Сергей","eliminated":false},
+  {"team":"Бельгия","owner":"Вячеслав","eliminated":false},
+  {"team":"Хорватия","owner":"Сергей","eliminated":false},
+  {"team":"Уругвай","owner":"Вячеслав","eliminated":false},
+  {"team":"Колумбия","owner":"Сергей","eliminated":false},
+  {"team":"Швейцария","owner":"Вячеслав","eliminated":false},
+  {"team":"Сенегал","owner":"Вячеслав","eliminated":false},
+  {"team":"Эквадор","owner":"Сергей","eliminated":false},
+  {"team":"США","owner":"Сергей","eliminated":false},
+  {"team":"Мексика","owner":"Сергей","eliminated":false},
+  {"team":"Япония","owner":"Сергей","eliminated":false},
+  {"team":"Норвегия","owner":"Сергей","eliminated":false},
+  {"team":"Австрия","owner":"Сергей","eliminated":false},
+  {"team":"Турция","owner":"Сергей","eliminated":false},
+  {"team":"Кот‑д’Ивуар","owner":"Вячеслав","eliminated":false},
+  {"team":"Египет","owner":"Сергей","eliminated":false},
+  {"team":"Канада","owner":"Вячеслав","eliminated":false},
+  {"team":"Швеция","owner":"Вячеслав","eliminated":false},
+  {"team":"Южная Корея","owner":"Вячеслав","eliminated":false},
+  {"team":"Австралия","owner":"Вячеслав","eliminated":false},
+  {"team":"Алжир","owner":"Вячеслав","eliminated":false},
+  {"team":"Парагвай","owner":"Вячеслав","eliminated":false},
+  {"team":"Иран","owner":"Вячеслав","eliminated":false},
+  {"team":"Тунис","owner":"Сергей","eliminated":false},
+  {"team":"ДР Конго","owner":"Вячеслав","eliminated":false},
+  {"team":"Шотландия","owner":"Вячеслав","eliminated":false},
+  {"team":"Гана","owner":"Вячеслав","eliminated":false},
+  {"team":"Узбекистан","owner":"Вячеслав","eliminated":false},
+  {"team":"ЮАР","owner":"Сергей","eliminated":false},
+  {"team":"Катар","owner":"Сергей","eliminated":false},
+  {"team":"Чехия","owner":"Вячеслав","eliminated":false},
+  {"team":"Босния и Герцеговина","owner":"Сергей","eliminated":false},
+  {"team":"Панама","owner":"Сергей","eliminated":false},
+  {"team":"Ирак","owner":"Вячеслав","eliminated":false},
+  {"team":"Иордания","owner":"Вячеслав","eliminated":false},
+  {"team":"Саудовская Аравия","owner":"Сергей","eliminated":false},
+  {"team":"Новая Зеландия","owner":"Сергей","eliminated":false},
+  {"team":"Кабо‑Верде","owner":"Вячеслав","eliminated":false},
+  {"team":"Гаити","owner":"Сергей","eliminated":false},
+  {"team":"Кюрасао","owner":"Сергей","eliminated":false}
 ];
 
 const matches = [
   { date: "2026-06-11", stage: "GROUP_STAGE", homeTeam: "Мексика", awayTeam: "ЮАР", homeScore: 2, awayScore: 0, status: "FINISHED" },
   { date: "2026-06-11", stage: "GROUP_STAGE", homeTeam: "Южная Корея", awayTeam: "Чехия", homeScore: 2, awayScore: 1, status: "FINISHED" },
   { date: "2026-06-12", stage: "GROUP_STAGE", homeTeam: "Канада", awayTeam: "Босния и Герцеговина", homeScore: 1, awayScore: 1, status: "FINISHED" },
+  { date: "2026-06-12", stage: "GROUP_STAGE", homeTeam: "США", awayTeam: "Парагвай", homeScore: 4, awayScore: 1, status: "FINISHED" },
   { date: "2026-06-13", stage: "GROUP_STAGE", homeTeam: "Катар", awayTeam: "Швейцария", homeScore: 1, awayScore: 1, status: "FINISHED" },
   { date: "2026-06-13", stage: "GROUP_STAGE", homeTeam: "Бразилия", awayTeam: "Марокко", homeScore: 1, awayScore: 1, status: "FINISHED" },
   { date: "2026-06-13", stage: "GROUP_STAGE", homeTeam: "Шотландия", awayTeam: "Гаити", homeScore: 1, awayScore: 0, status: "FINISHED" },
-  { date: "2026-06-12", stage: "GROUP_STAGE", homeTeam: "США", awayTeam: "Парагвай", homeScore: 4, awayScore: 1, status: "FINISHED" },
   { date: "2026-06-14", stage: "GROUP_STAGE", homeTeam: "Австралия", awayTeam: "Турция", homeScore: 2, awayScore: 0, status: "FINISHED" },
   { date: "2026-06-14", stage: "GROUP_STAGE", homeTeam: "Германия", awayTeam: "Кюрасао", homeScore: 7, awayScore: 1, status: "FINISHED" },
   { date: "2026-06-14", stage: "GROUP_STAGE", homeTeam: "Кот‑д’Ивуар", awayTeam: "Эквадор", homeScore: 1, awayScore: 0, status: "FINISHED" },
@@ -317,6 +441,7 @@ const matches = [
   { date: "2026-06-22", stage: "GROUP_STAGE", homeTeam: "Норвегия", awayTeam: "Сенегал", homeScore: 3, awayScore: 2, status: "FINISHED" },
   { date: "2026-06-22", stage: "GROUP_STAGE", homeTeam: "Иордания", awayTeam: "Алжир", homeScore: 1, awayScore: 2, status: "FINISHED" },
 
+
   { date: "2026-06-23", stage: "GROUP_STAGE", homeTeam: "Португалия", awayTeam: "Узбекистан", homeScore: null, awayScore: null, status: "SCHEDULED" },
   { date: "2026-06-23", stage: "GROUP_STAGE", homeTeam: "Колумбия", awayTeam: "ДР Конго", homeScore: null, awayScore: null, status: "SCHEDULED" },
   { date: "2026-06-23", stage: "GROUP_STAGE", homeTeam: "Англия", awayTeam: "Гана", homeScore: null, awayScore: null, status: "SCHEDULED" },
@@ -354,11 +479,20 @@ const els = {
   sergeyPoints: document.getElementById('sergeyPoints'),
   slavaTeams: document.getElementById('slavaTeams'),
   sergeyTeams: document.getElementById('sergeyTeams'),
+  slavaStartTeams: document.getElementById('slavaStartTeams'),
+  sergeyStartTeams: document.getElementById('sergeyStartTeams'),
+  slavaAliveTeams: document.getElementById('slavaAliveTeams'),
+  sergeyAliveTeams: document.getElementById('sergeyAliveTeams'),
+  slavaPointsHero: document.getElementById('slavaPointsHero'),
+  sergeyPointsHero: document.getElementById('sergeyPointsHero'),
   teamsTable: document.querySelector('#teamsTable tbody'),
   matchesTable: document.querySelector('#matchesTable tbody'),
   log: document.getElementById('log'),
-  lastUpdate: document.getElementById('lastUpdate')
+  lastUpdate: document.getElementById('lastUpdate'),
+  leaderLine: document.getElementById('leaderLine')
 };
+
+let scoreChart;
 
 function normalize(s){
   return (s || '').toString().trim().toLowerCase().normalize('NFD')
@@ -367,14 +501,17 @@ function normalize(s){
     .replace(/[‑–—−]/g, '-')
     .replace(/\s+/g, ' ');
 }
+
 function ownerOf(team){
   const x = teams.find(t => normalize(t.team) === normalize(team));
   return x ? x.owner : null;
 }
+
 function stageType(stage){
   const s = normalize(stage);
   return s.includes('group') ? 'group' : 'knockout';
 }
+
 function prettyStage(stage){
   const map = {
     GROUP_STAGE: 'Групповой этап',
@@ -387,17 +524,25 @@ function prettyStage(stage){
   };
   return map[stage] || stage;
 }
+
 function prettyStatus(status){
-  const map = { SCHEDULED:'Запланирован', FINISHED:'Завершён', IN_PLAY:'Идёт' };
+  const map = {
+    SCHEDULED:'Запланирован',
+    FINISHED:'Завершён',
+    IN_PLAY:'Идёт'
+  };
   return map[status] || status;
 }
+
 function prettyDate(date){
   return new Date(date + 'T12:00:00').toLocaleDateString('ru-RU');
 }
+
 function calcPoints(match){
   const oh = ownerOf(match.homeTeam);
   const oa = ownerOf(match.awayTeam);
-  let sl = 0, se = 0;
+  let sl = 0;
+  let se = 0;
 
   if (match.status !== 'FINISHED' || match.homeScore == null || match.awayScore == null) {
     return { sl, se, text: 'Матч не завершён' };
@@ -433,23 +578,126 @@ function calcPoints(match){
     }
   }
 
-  return { sl, se, text: `${match.homeTeam} ${match.homeScore}:${match.awayScore} ${match.awayTeam}` };
+  return {
+    sl, se,
+    text: `${match.homeTeam} ${match.homeScore}:${match.awayScore} ${match.awayTeam}`
+  };
 }
 
 function renderTeams(){
+  const slavaAll = teams.filter(t => t.owner === 'Вячеслав');
+  const sergeyAll = teams.filter(t => t.owner === 'Сергей');
+  const slavaAlive = slavaAll.filter(t => !t.eliminated);
+  const sergeyAlive = sergeyAll.filter(t => !t.eliminated);
+
   els.teamsTable.innerHTML = teams.map((t, i) => `
     <tr>
       <td>${i + 1}</td>
       <td>${t.team}</td>
       <td><span class="pill ${t.owner === 'Сергей' ? 'sergey' : 'slava'}">${ownerNames[t.owner]}</span></td>
+      <td><span class="pill ${t.eliminated ? 'out' : 'in'}">${t.eliminated ? 'Вылетела' : 'В турнире'}</span></td>
     </tr>
   `).join('');
-  els.slavaTeams.textContent = teams.filter(t => t.owner === 'Вячеслав').length;
-  els.sergeyTeams.textContent = teams.filter(t => t.owner === 'Сергей').length;
+
+  els.slavaTeams.textContent = slavaAll.length;
+  els.sergeyTeams.textContent = sergeyAll.length;
+  els.slavaStartTeams.textContent = slavaAll.length;
+  els.sergeyStartTeams.textContent = sergeyAll.length;
+  els.slavaAliveTeams.textContent = slavaAlive.length;
+  els.sergeyAliveTeams.textContent = sergeyAlive.length;
+}
+
+function buildCumulativeSeries(){
+  const finished = matches.filter(m => m.status === 'FINISHED' && m.homeScore != null && m.awayScore != null);
+  let sl = 0;
+  let se = 0;
+  const labels = ['Старт'];
+  const slavaSeries = [0];
+  const sergeySeries = [0];
+
+  finished.forEach((m, i) => {
+    const p = calcPoints(m);
+    sl += p.sl;
+    se += p.se;
+    labels.push(`${i + 1}`);
+    slavaSeries.push(sl);
+    sergeySeries.push(se);
+  });
+
+  return { labels, slavaSeries, sergeySeries };
+}
+
+function renderChart(){
+  const ctx = document.getElementById('scoreChart').getContext('2d');
+  const { labels, slavaSeries, sergeySeries } = buildCumulativeSeries();
+
+  if (scoreChart) scoreChart.destroy();
+
+  scoreChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Славик',
+          data: slavaSeries,
+          borderColor: '#ef4444',
+          backgroundColor: 'rgba(239,68,68,.16)',
+          pointBackgroundColor: '#ef4444',
+          pointRadius: 3,
+          pointHoverRadius: 5,
+          tension: 0.28,
+          borderWidth: 3,
+          fill: false
+        },
+        {
+          label: 'Сергей',
+          data: sergeySeries,
+          borderColor: '#3b82f6',
+          backgroundColor: 'rgba(59,130,246,.16)',
+          pointBackgroundColor: '#3b82f6',
+          pointRadius: 3,
+          pointHoverRadius: 5,
+          tension: 0.28,
+          borderWidth: 3,
+          fill: false
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: {
+          labels: { color: '#eff4ff' }
+        },
+        tooltip: {
+          backgroundColor: '#0f1b31',
+          titleColor: '#eff4ff',
+          bodyColor: '#dbeafe',
+          borderColor: '#243554',
+          borderWidth: 1
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: '#9eb0d1' },
+          grid: { color: 'rgba(255,255,255,.06)' }
+        },
+        y: {
+          beginAtZero: true,
+          ticks: { color: '#9eb0d1', precision: 0 },
+          grid: { color: 'rgba(255,255,255,.06)' }
+        }
+      }
+    }
+  });
 }
 
 function renderMatches(){
-  let sl = 0, se = 0;
+  let sl = 0;
+  let se = 0;
   const logs = [];
 
   els.matchesTable.innerHTML = matches.map(m => {
@@ -484,12 +732,27 @@ function renderMatches(){
 
   els.slavaPoints.textContent = sl;
   els.sergeyPoints.textContent = se;
-  els.log.innerHTML = logs.length ? logs.join('') : '<div class="event">Пока нет завершённых матчей для начисления.</div>';
+  els.slavaPointsHero.textContent = sl;
+  els.sergeyPointsHero.textContent = se;
+
+  if (sl > se) {
+    els.leaderLine.textContent = `Лидирует Славик: ${sl} : ${se}`;
+  } else if (se > sl) {
+    els.leaderLine.textContent = `Лидирует Сергей: ${se} : ${sl}`;
+  } else {
+    els.leaderLine.textContent = `Пока ничья: ${sl} : ${se}`;
+  }
+
+  els.log.innerHTML = logs.length
+    ? logs.join('')
+    : '<div class="event">Пока нет завершённых матчей для начисления.</div>';
+
   els.lastUpdate.textContent = 'Последнее ручное обновление: ' + new Date().toLocaleString('ru-RU');
 }
 
 renderTeams();
 renderMatches();
+renderChart();
 </script>
 </body>
 </html>
