@@ -185,6 +185,10 @@
       padding:2px 6px;
       border-radius:6px;
     }
+    td strong{
+      color:#fde68a;
+      font-weight:900;
+    }
     @media (max-width:1180px){
       .hero{grid-template-columns:1fr}
       .scoreBig{order:-1}
@@ -212,10 +216,10 @@
     <div class="person">
       <div class="avatar">
         <picture>
-          <source srcset="/assets/slava.webp?v=6" type="image/webp">
-          <source srcset="/assets/slava.jpg?v=6" type="image/jpeg">
+          <source srcset="/assets/slava.webp?v=7" type="image/webp">
+          <source srcset="/assets/slava.jpg?v=7" type="image/jpeg">
           <img
-            src="/assets/slava.jpg?v=6"
+            src="/assets/slava.jpg?v=7"
             alt="Вячеслав"
             width="92"
             height="92"
@@ -255,10 +259,10 @@
     <div class="person">
       <div class="avatar">
         <picture>
-          <source srcset="/assets/sergey.webp?v=6" type="image/webp">
-          <source srcset="/assets/sergey.jpg?v=6" type="image/jpeg">
+          <source srcset="/assets/sergey.webp?v=7" type="image/webp">
+          <source srcset="/assets/sergey.jpg?v=7" type="image/jpeg">
           <img
-            src="/assets/sergey.jpg?v=6"
+            src="/assets/sergey.jpg?v=7"
             alt="Сергей"
             width="92"
             height="92"
@@ -280,7 +284,8 @@
             <div class="label">Старт команд</div>
             <div class="value" id="sergeyStartTeams">0</div>
           </div>
-          <div class="label">Осталось</div>
+          <div class="miniStat">
+            <div class="label">Осталось</div>
             <div class="value" id="sergeyAliveTeams">0</div>
           </div>
         </div>
@@ -300,9 +305,6 @@
     <div class="chartWrap">
       <canvas id="scoreChart"></canvas>
     </div>
-    <p class="note" style="margin-top:12px">
-      Линии строятся по сумме очков после каждого завершённого матча. Это обычный line chart, который хорошо подходит для показа динамики значений во времени. [web:1650][web:1659]
-    </p>
   </section>
 
   <section class="layout">
@@ -311,7 +313,7 @@
       <div class="tableWrap">
         <table id="teamsTable">
           <thead>
-            <tr><th>#</th><th>Команда</th><th>Владелец</th><th>Статус</th></tr>
+            <tr><th>#</th><th>Команда</th><th>Владелец</th><th>Статус</th><th>Набранные очки</th></tr>
           </thead>
           <tbody></tbody>
         </table>
@@ -394,7 +396,6 @@ const teams = [
   {"team":"Гаити","owner":"Сергей","eliminated":false},
   {"team":"Кюрасао","owner":"Сергей","eliminated":false}
 ];
-
 const matches = [
   { date: "2026-06-11", stage: "GROUP_STAGE", homeTeam: "Мексика", awayTeam: "ЮАР", homeScore: 2, awayScore: 0, status: "FINISHED" },
   { date: "2026-06-11", stage: "GROUP_STAGE", homeTeam: "Южная Корея", awayTeam: "Чехия", homeScore: 2, awayScore: 1, status: "FINISHED" },
@@ -442,15 +443,16 @@ const matches = [
   { date: "2026-06-22", stage: "GROUP_STAGE", homeTeam: "Иордания", awayTeam: "Алжир", homeScore: 1, awayScore: 2, status: "FINISHED" },
   { date: "2026-06-23", stage: "GROUP_STAGE", homeTeam: "Португалия", awayTeam: "Узбекистан", homeScore: 5, awayScore: 0, status: "FINISHED" },
 
-  { date: "2026-06-23", stage: "GROUP_STAGE", homeTeam: "Колумбия", awayTeam: "ДР Конго", homeScore: null, awayScore: null, status: "SCHEDULED" },
-  { date: "2026-06-23", stage: "GROUP_STAGE", homeTeam: "Англия", awayTeam: "Гана", homeScore: null, awayScore: null, status: "SCHEDULED" },
-  { date: "2026-06-23", stage: "GROUP_STAGE", homeTeam: "Панама", awayTeam: "Хорватия", homeScore: null, awayScore: null, status: "SCHEDULED" },
-  { date: "2026-06-24", stage: "GROUP_STAGE", homeTeam: "Чехия", awayTeam: "Мексика", homeScore: null, awayScore: null, status: "SCHEDULED" },
-  { date: "2026-06-24", stage: "GROUP_STAGE", homeTeam: "ЮАР", awayTeam: "Южная Корея", homeScore: null, awayScore: null, status: "SCHEDULED" },
-  { date: "2026-06-24", stage: "GROUP_STAGE", homeTeam: "Швейцария", awayTeam: "Канада", homeScore: null, awayScore: null, status: "SCHEDULED" },
-  { date: "2026-06-24", stage: "GROUP_STAGE", homeTeam: "Босния и Герцеговина", awayTeam: "Катар", homeScore: null, awayScore: null, status: "SCHEDULED" },
-  { date: "2026-06-24", stage: "GROUP_STAGE", homeTeam: "Шотландия", awayTeam: "Бразилия", homeScore: null, awayScore: null, status: "SCHEDULED" },
-  { date: "2026-06-24", stage: "GROUP_STAGE", homeTeam: "Марокко", awayTeam: "Гаити", homeScore: null, awayScore: null, status: "SCHEDULED" },
+  { date: "2026-06-23", stage: "GROUP_STAGE", homeTeam: "Колумбия", awayTeam: "ДР Конго", homeScore: 1, awayScore: 0, status: "FINISHED" },
+  { date: "2026-06-23", stage: "GROUP_STAGE", homeTeam: "Англия", awayTeam: "Гана", homeScore: 0, awayScore: 0, status: "FINISHED" },
+  { date: "2026-06-23", stage: "GROUP_STAGE", homeTeam: "Панама", awayTeam: "Хорватия", homeScore: 0, awayScore: 1, status: "FINISHED" },
+  { date: "2026-06-24", stage: "GROUP_STAGE", homeTeam: "Чехия", awayTeam: "Мексика", homeScore: 0, awayScore: 3, status: "FINISHED" },
+  { date: "2026-06-24", stage: "GROUP_STAGE", homeTeam: "ЮАР", awayTeam: "Южная Корея", homeScore: 1, awayScore: 0, status: "FINISHED" },
+  { date: "2026-06-24", stage: "GROUP_STAGE", homeTeam: "Швейцария", awayTeam: "Канада", homeScore: 2, awayScore: 1, status: "FINISHED" },
+  { date: "2026-06-24", stage: "GROUP_STAGE", homeTeam: "Босния и Герцеговина", awayTeam: "Катар", homeScore: 3, awayScore: 1, status: "FINISHED" },
+  { date: "2026-06-24", stage: "GROUP_STAGE", homeTeam: "Шотландия", awayTeam: "Бразилия", homeScore: 0, awayScore: 3, status: "FINISHED" },
+  { date: "2026-06-24", stage: "GROUP_STAGE", homeTeam: "Марокко", awayTeam: "Гаити", homeScore: 4, awayScore: 2, status: "FINISHED" },
+
   { date: "2026-06-25", stage: "GROUP_STAGE", homeTeam: "Турция", awayTeam: "США", homeScore: null, awayScore: null, status: "SCHEDULED" },
   { date: "2026-06-25", stage: "GROUP_STAGE", homeTeam: "Парагвай", awayTeam: "Австралия", homeScore: null, awayScore: null, status: "SCHEDULED" },
   { date: "2026-06-25", stage: "GROUP_STAGE", homeTeam: "Эквадор", awayTeam: "Германия", homeScore: null, awayScore: null, status: "SCHEDULED" },
@@ -583,6 +585,31 @@ function calcPoints(match){
   };
 }
 
+function pointsForTeam(teamName){
+  let pts = 0;
+
+  matches.forEach(match => {
+    if (match.status !== 'FINISHED' || match.homeScore == null || match.awayScore == null) return;
+
+    const isHome = normalize(match.homeTeam) === normalize(teamName);
+    const isAway = normalize(match.awayTeam) === normalize(teamName);
+    if (!isHome && !isAway) return;
+
+    const group = stageType(match.stage) === 'group';
+
+    if (group) {
+      if (isHome && match.homeScore > match.awayScore) pts += 3;
+      else if (isAway && match.awayScore > match.homeScore) pts += 3;
+      else if (match.homeScore === match.awayScore) pts += 1;
+    } else {
+      if (isHome && match.homeScore > match.awayScore) pts += 3;
+      else if (isAway && match.awayScore > match.homeScore) pts += 3;
+    }
+  });
+
+  return pts;
+}
+
 function renderTeams(){
   const slavaAll = teams.filter(t => t.owner === 'Вячеслав');
   const sergeyAll = teams.filter(t => t.owner === 'Сергей');
@@ -595,6 +622,7 @@ function renderTeams(){
       <td>${t.team}</td>
       <td><span class="pill ${t.owner === 'Сергей' ? 'sergey' : 'slava'}">${ownerNames[t.owner]}</span></td>
       <td><span class="pill ${t.eliminated ? 'out' : 'in'}">${t.eliminated ? 'Вылетела' : 'В турнире'}</span></td>
+      <td><strong>${pointsForTeam(t.team)}</strong></td>
     </tr>
   `).join('');
 
